@@ -8,6 +8,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         commandMetadataFlow,
         dynamicParameterDSLFlow,
         parameterGroupFlow,
+        helpRenderingFlow,
         duplicateParamValidationFlow,
         duplicateShortValidationFlow,
         duplicateChildValidationFlow,
@@ -35,6 +36,196 @@ enum ArgumentFlowSuite: TestFlowRegistry {
 }
 
 private extension ArgumentFlowSuite {
+    static var helpRenderingFlow: TestFlow {
+        TestFlow(
+            "help-rendering",
+            tags: ["help", "renderer", "metadata"]
+        ) {
+            Step("render command usage, params, and examples") {
+                let spec = try cmd("agentic") {
+                    try cmd("run") {
+                        about("Run one prompt.")
+                        discussion("Runs one prompt through the selected backend.")
+
+                        arg(
+                            "prompt",
+                            as: String.self,
+                            arity: .optional,
+                            help: "Prompt to run."
+                        )
+
+                        opt(
+                            "model",
+                            short: "m",
+                            as: String.self,
+                            help: "Model name."
+                        )
+
+                        flag(
+                            "stream",
+                            short: "s",
+                            help: "Stream output."
+                        )
+
+                        example(
+                            "agentic run \"write tests\"",
+                            description: "Run a single prompt."
+                        )
+                    }
+                }
+
+                let run = spec.children[0]
+                let help = ArgumentHelpRenderer().render(
+                    command: run,
+                    path: [
+                        spec.name,
+                    ]
+                )
+
+                try Expect.contains(
+                    help,
+                    "agentic run",
+                    "help.command-path"
+                )
+
+                try Expect.contains(
+                    help,
+                    "usage:",
+                    "help.usage"
+                )
+
+                try Expect.contains(
+                    help,
+                    "agentic run [prompt] [options]",
+                    "help.usage-line"
+                )
+
+                try Expect.contains(
+                    help,
+                    "arguments:",
+                    "help.arguments"
+                )
+
+                try Expect.contains(
+                    help,
+                    "[prompt]",
+                    "help.prompt"
+                )
+
+                try Expect.contains(
+                    help,
+                    "options:",
+                    "help.options"
+                )
+
+                try Expect.contains(
+                    help,
+                    "-m, --model <string>",
+                    "help.model"
+                )
+
+                try Expect.contains(
+                    help,
+                    "-s, --stream",
+                    "help.stream"
+                )
+
+                try Expect.contains(
+                    help,
+                    "examples:",
+                    "help.examples"
+                )
+
+                try Expect.contains(
+                    help,
+                    "agentic run \"write tests\"",
+                    "help.example.text"
+                )
+            }
+
+            Step("render root command list") {
+                let spec = try cmd("agentic") {
+                    about("Agentic runtime interface.")
+
+                    try cmd("run") {
+                        about("Run one prompt.")
+                    }
+
+                    try cmd("chat") {
+                        about("Start an interactive session.")
+                    }
+                }
+
+                let help = ArgumentHelpRenderer().render(
+                    command: spec
+                )
+
+                try Expect.contains(
+                    help,
+                    "agentic",
+                    "help.root.name"
+                )
+
+                try Expect.contains(
+                    help,
+                    "agentic <command>",
+                    "help.root.usage"
+                )
+
+                try Expect.contains(
+                    help,
+                    "commands:",
+                    "help.root.commands"
+                )
+
+                try Expect.contains(
+                    help,
+                    "run",
+                    "help.root.run"
+                )
+
+                try Expect.contains(
+                    help,
+                    "chat",
+                    "help.root.chat"
+                )
+            }
+
+            Step("render grouped params as normal options") {
+                let spec = try cmd("run") {
+                    try group("output") {
+                        opt(
+                            "format",
+                            short: "f",
+                            as: String.self,
+                            help: "Output format."
+                        )
+
+                        flag(
+                            "json",
+                            help: "Write JSON."
+                        )
+                    }
+                }
+
+                let help = ArgumentHelpRenderer().render(
+                    command: spec
+                )
+
+                try Expect.contains(
+                    help,
+                    "-f, --format <string>",
+                    "help.grouped.format"
+                )
+
+                try Expect.contains(
+                    help,
+                    "--json",
+                    "help.grouped.json"
+                )
+            }
+        }
+    }
     static var propertyWrapperBindingFlow: TestFlow {
         TestFlow(
             "property-wrapper-binding",
