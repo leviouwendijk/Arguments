@@ -1,12 +1,21 @@
 @propertyWrapper
 public struct Flag: ArgumentField {
-    public var wrappedValue: Bool
+    private let storage: ArgumentFieldStorage<Bool>
 
     private var name: ParamName
     private var short: Character?
     private var defaultValue: Bool
     private var negation: FlagNegation
     private var help: String?
+
+    public var wrappedValue: Bool {
+        get {
+            storage.value
+        }
+        nonmutating set {
+            storage.value = newValue
+        }
+    }
 
     public init(
         _ name: String,
@@ -15,12 +24,14 @@ public struct Flag: ArgumentField {
         negation: FlagNegation = .automatic,
         help: String? = nil
     ) {
+        self.storage = ArgumentFieldStorage(
+            defaultValue
+        )
         self.name = ParamName(name)
         self.short = short
         self.defaultValue = defaultValue
         self.negation = negation
         self.help = help
-        self.wrappedValue = defaultValue
     }
 
     public func lowerParam() throws -> ParamSpec {

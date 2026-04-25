@@ -13,6 +13,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         duplicateChildValidationFlow,
         primitiveValueParserFlow,
         propertyWrapperFieldCollectionFlow,
+        propertyWrapperBindingFlow,
         argvCursorFlow,
         commandResolutionFlow,
         longFlagParsingFlow,
@@ -34,6 +35,96 @@ enum ArgumentFlowSuite: TestFlowRegistry {
 }
 
 private extension ArgumentFlowSuite {
+    static var propertyWrapperBindingFlow: TestFlow {
+        TestFlow(
+            "property-wrapper-binding",
+            tags: ["typed", "wrappers", "binding"]
+        ) {
+            Step("bind parsed invocation into property-wrapper fields") {
+                var fixture = WrapperFixture()
+
+                let spec = try cmd("run") {
+                    params(
+                        try ArgumentFieldCollector.params(
+                            of: fixture
+                        )
+                    )
+                }
+
+                let invocation = try ArgumentParser.parse(
+                    [
+                        "--model",
+                        "gpt-5.5",
+                        "--json",
+                        "hello",
+                    ],
+                    command: spec
+                )
+
+                try ArgumentFieldCollector.bind(
+                    invocation,
+                    into: &fixture
+                )
+
+                try Expect.equal(
+                    fixture.prompt,
+                    "hello",
+                    "wrapper.binding.prompt"
+                )
+
+                try Expect.equal(
+                    fixture.model,
+                    "gpt-5.5",
+                    "wrapper.binding.model"
+                )
+
+                try Expect.true(
+                    fixture.json,
+                    "wrapper.binding.json"
+                )
+            }
+
+            Step("missing values preserve wrapper defaults") {
+                var fixture = WrapperFixture()
+
+                let spec = try cmd("run") {
+                    params(
+                        try ArgumentFieldCollector.params(
+                            of: fixture
+                        )
+                    )
+                }
+
+                let invocation = try ArgumentParser.parse(
+                    [
+                        "hello",
+                    ],
+                    command: spec
+                )
+
+                try ArgumentFieldCollector.bind(
+                    invocation,
+                    into: &fixture
+                )
+
+                try Expect.equal(
+                    fixture.prompt,
+                    "hello",
+                    "wrapper.binding.defaults.prompt"
+                )
+
+                try Expect.isNil(
+                    fixture.model,
+                    "wrapper.binding.defaults.model"
+                )
+
+                try Expect.false(
+                    fixture.json,
+                    "wrapper.binding.defaults.json"
+                )
+            }
+        }
+    }
     static var parameterGroupFlow: TestFlow {
         TestFlow(
             "parameter-groups",

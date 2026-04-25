@@ -1,6 +1,6 @@
 public enum ArgumentFieldCollector {
-    public static func params(
-        of value: Any
+    public static func params<Value>(
+        of value: Value
     ) throws -> [ParamSpec] {
         try fields(
             of: value
@@ -9,9 +9,9 @@ public enum ArgumentFieldCollector {
         }
     }
 
-    public static func bind(
+    public static func bind<Value>(
         _ invocation: ParsedInvocation,
-        into value: inout Any
+        into value: inout Value
     ) throws {
         var mirror = Mirror(
             reflecting: value
@@ -19,11 +19,13 @@ public enum ArgumentFieldCollector {
 
         while true {
             for child in mirror.children {
-                guard var field = child.value as? ArgumentField else {
+                guard var field = child.value as? any ArgumentField else {
                     continue
                 }
 
-                try field.bind(invocation)
+                try field.bind(
+                    invocation
+                )
             }
 
             guard let parent = mirror.superclassMirror else {
@@ -34,21 +36,23 @@ public enum ArgumentFieldCollector {
         }
     }
 
-    private static func fields(
-        of value: Any
-    ) -> [ArgumentField] {
-        var result: [ArgumentField] = []
+    private static func fields<Value>(
+        of value: Value
+    ) -> [any ArgumentField] {
+        var result: [any ArgumentField] = []
         var mirror = Mirror(
             reflecting: value
         )
 
         while true {
             for child in mirror.children {
-                guard let field = child.value as? ArgumentField else {
+                guard let field = child.value as? any ArgumentField else {
                     continue
                 }
 
-                result.append(field)
+                result.append(
+                    field
+                )
             }
 
             guard let parent = mirror.superclassMirror else {

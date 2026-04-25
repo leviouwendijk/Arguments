@@ -1,20 +1,31 @@
 @propertyWrapper
 public struct Opt<Value: ArgumentValue>: ArgumentField {
-    public var wrappedValue: Value?
+    private let storage: ArgumentFieldStorage<Value?>
 
     private var name: ParamName
     private var short: Character?
     private var help: String?
+
+    public var wrappedValue: Value? {
+        get {
+            storage.value
+        }
+        nonmutating set {
+            storage.value = newValue
+        }
+    }
 
     public init(
         _ name: String,
         short: Character? = nil,
         help: String? = nil
     ) {
+        self.storage = ArgumentFieldStorage(
+            nil
+        )
         self.name = ParamName(name)
         self.short = short
         self.help = help
-        self.wrappedValue = nil
     }
 
     public func lowerParam() throws -> ParamSpec {

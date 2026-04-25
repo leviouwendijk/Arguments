@@ -73,3 +73,31 @@ public func flag(
         )
     )
 }
+
+public struct DynamicParams: CommandComponentLowerable {
+    public var params: [ParamSpec]
+
+    public init(
+        _ params: [ParamSpec]
+    ) {
+        self.params = params
+    }
+
+    public func lowerCommandComponent() throws -> CommandComponent {
+        .param(
+            .group(
+                .init(
+                    params: params
+                )
+            )
+        )
+    }
+}
+
+public func params(
+    _ params: [ParamSpec]
+) -> DynamicParams {
+    DynamicParams(
+        params
+    )
+}

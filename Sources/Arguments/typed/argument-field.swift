@@ -6,23 +6,34 @@ public protocol ArgumentField: ParamSpecLowerable {
 
 @propertyWrapper
 public struct Arg<Value: ArgumentValue>: ArgumentField {
-    public var wrappedValue: Value
+    private let storage: ArgumentFieldStorage<Value>
 
     private var name: ParamName
     private var arity: ValueArity
     private var help: String?
     private var defaultValue: Value?
 
+    public var wrappedValue: Value {
+        get {
+            storage.value
+        }
+        nonmutating set {
+            storage.value = newValue
+        }
+    }
+
     public init(
         _ name: String,
         help: String? = nil,
         default defaultValue: Value
     ) {
+        self.storage = ArgumentFieldStorage(
+            defaultValue
+        )
         self.name = ParamName(name)
         self.arity = .required
         self.help = help
         self.defaultValue = defaultValue
-        self.wrappedValue = defaultValue
     }
 
     public func lowerParam() throws -> ParamSpec {
@@ -61,10 +72,12 @@ public extension Arg where Value: ExpressibleByNilLiteral {
         _ name: String,
         help: String? = nil
     ) {
+        self.storage = ArgumentFieldStorage(
+            nil
+        )
         self.name = ParamName(name)
         self.arity = .optional
         self.help = help
         self.defaultValue = nil
-        self.wrappedValue = nil
     }
 }
