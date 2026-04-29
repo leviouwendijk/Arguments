@@ -16,7 +16,7 @@ let package = Package(
 
         .executable(
             name: "argtest",
-            targets: ["ArgumentFlowTesting"]
+            targets: ["ArgumentTestFlows"]
         ),
     ],
 
@@ -28,7 +28,7 @@ let package = Package(
             name: "Arguments"
         ),
         .executableTarget(
-            name: "ArgumentFlowTesting",
+            name: "ArgumentTestFlows",
             dependencies: [
                 "Arguments",
                 .product(name: "TestFlows", package: "TestFlows"),

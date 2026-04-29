@@ -9,6 +9,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         dynamicParameterDSLFlow,
         parameterGroupFlow,
         helpRenderingFlow,
+        argumentApplicationFlow,
         duplicateParamValidationFlow,
         duplicateShortValidationFlow,
         duplicateChildValidationFlow,
@@ -36,6 +37,158 @@ enum ArgumentFlowSuite: TestFlowRegistry {
 }
 
 private extension ArgumentFlowSuite {
+    static var argumentApplicationFlow: TestFlow {
+        TestFlow(
+            "argument-application",
+            tags: ["application", "dispatch", "commands"]
+        ) {
+            Step("run default command for root invocation") {
+                let spec = try cmd("agentic") {
+                    try cmd("tui") {
+                        flag("json")
+                    }
+
+                    try cmd("run") {
+                        arg(
+                            "prompt",
+                            as: String.self
+                        )
+                    }
+                }
+
+                final class Box: @unchecked Sendable {
+                    var value = ""
+                }
+
+                let box = Box()
+
+                let application = ArgumentApplication(
+                    spec: spec
+                ) {
+                    defaultCommand { _ in
+                        box.value = "default"
+                    }
+
+                    command("tui") { _ in
+                        box.value = "tui"
+                    }
+
+                    command("run") { _ in
+                        box.value = "run"
+                    }
+                }
+
+                try await application.run(
+                    []
+                )
+
+                try Expect.equal(
+                    box.value,
+                    "default",
+                    "application.default"
+                )
+            }
+
+            Step("run routed child command") {
+                let spec = try cmd("agentic") {
+                    try cmd("run") {
+                        arg(
+                            "prompt",
+                            as: String.self
+                        )
+                    }
+                }
+
+                final class Box: @unchecked Sendable {
+                    var prompt = ""
+                }
+
+                let box = Box()
+
+                let application = ArgumentApplication(
+                    spec: spec
+                ) {
+                    command("run") { invocation in
+                        box.prompt = try invocation.value(
+                            "prompt",
+                            as: String.self
+                        ) ?? ""
+                    }
+                }
+
+                try await application.run(
+                    [
+                        "run",
+                        "hello",
+                    ]
+                )
+
+                try Expect.equal(
+                    box.prompt,
+                    "hello",
+                    "application.route.prompt"
+                )
+            }
+
+            Step("run routed child command with explicit root name") {
+                let spec = try cmd("agentic") {
+                    try cmd("run") {
+                        flag("stream")
+                    }
+                }
+
+                final class Box: @unchecked Sendable {
+                    var stream = false
+                }
+
+                let box = Box()
+
+                let application = ArgumentApplication(
+                    spec: spec
+                ) {
+                    command("run") { invocation in
+                        box.stream = try invocation.flag(
+                            "stream"
+                        )
+                    }
+                }
+
+                try await application.run(
+                    [
+                        "agentic",
+                        "run",
+                        "--stream",
+                    ]
+                )
+
+                try Expect.true(
+                    box.stream,
+                    "application.explicit-root.stream"
+                )
+            }
+
+            Step("unhandled command can throw") {
+                let spec = try cmd("agentic") {
+                    try cmd("run") {
+                        flag("stream")
+                    }
+                }
+
+                let application = ArgumentApplication(
+                    spec: spec,
+                    showsHelpForUnhandledCommand: false
+                ) {}
+
+                try await Expect.throwsError("application.unhandled") {
+                    try await application.run(
+                        [
+                            "run",
+                        ]
+                    )
+                }
+            }
+        }
+    }
     static var helpRenderingFlow: TestFlow {
         TestFlow(
             "help-rendering",

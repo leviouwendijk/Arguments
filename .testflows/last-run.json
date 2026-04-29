@@ -1,0 +1,326 @@
+{
+  "failed" : 0,
+  "failed_names" : [
+
+  ],
+  "generated_at" : "2026-04-25T15:11:36Z",
+  "passed" : 28,
+  "results" : [
+    {
+      "display_name" : "command-metadata",
+      "duration_seconds" : 0.0004140138626098633,
+      "name" : "command-metadata",
+      "status" : "passed",
+      "tags" : [
+        "dsl",
+        "metadata",
+        "spec"
+      ]
+    },
+    {
+      "display_name" : "dynamic-parameter-dsl",
+      "duration_seconds" : 0.00016605854034423828,
+      "name" : "dynamic-parameter-dsl",
+      "status" : "passed",
+      "tags" : [
+        "dsl",
+        "params",
+        "spec"
+      ]
+    },
+    {
+      "display_name" : "parameter-groups",
+      "duration_seconds" : 0.0004620552062988281,
+      "name" : "parameter-groups",
+      "status" : "passed",
+      "tags" : [
+        "dsl",
+        "groups",
+        "params",
+        "parser",
+        "spec"
+      ]
+    },
+    {
+      "display_name" : "help-rendering",
+      "duration_seconds" : 0.0007879734039306641,
+      "name" : "help-rendering",
+      "status" : "passed",
+      "tags" : [
+        "help",
+        "metadata",
+        "renderer"
+      ]
+    },
+    {
+      "display_name" : "argument-application",
+      "duration_seconds" : 0.00043594837188720703,
+      "name" : "argument-application",
+      "status" : "passed",
+      "tags" : [
+        "application",
+        "commands",
+        "dispatch"
+      ]
+    },
+    {
+      "display_name" : "duplicate-param-validation",
+      "duration_seconds" : 2.205371856689453e-05,
+      "name" : "duplicate-param-validation",
+      "status" : "passed",
+      "tags" : [
+        "spec",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "duplicate-short-validation",
+      "duration_seconds" : 2.300739288330078e-05,
+      "name" : "duplicate-short-validation",
+      "status" : "passed",
+      "tags" : [
+        "spec",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "duplicate-child-validation",
+      "duration_seconds" : 1.2993812561035156e-05,
+      "name" : "duplicate-child-validation",
+      "status" : "passed",
+      "tags" : [
+        "children",
+        "spec",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "primitive-value-parsers",
+      "duration_seconds" : 4.398822784423828e-05,
+      "name" : "primitive-value-parsers",
+      "status" : "passed",
+      "tags" : [
+        "parsers",
+        "values"
+      ]
+    },
+    {
+      "display_name" : "property-wrapper-field-collection",
+      "duration_seconds" : 0.00027501583099365234,
+      "name" : "property-wrapper-field-collection",
+      "status" : "passed",
+      "tags" : [
+        "params",
+        "typed",
+        "wrappers"
+      ]
+    },
+    {
+      "display_name" : "property-wrapper-binding",
+      "duration_seconds" : 0.0002809762954711914,
+      "name" : "property-wrapper-binding",
+      "status" : "passed",
+      "tags" : [
+        "binding",
+        "typed",
+        "wrappers"
+      ]
+    },
+    {
+      "display_name" : "argv-cursor",
+      "duration_seconds" : 7.033348083496094e-06,
+      "name" : "argv-cursor",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "command-resolution",
+      "duration_seconds" : 0.00010800361633300781,
+      "name" : "command-resolution",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "commands",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "long-flag-parsing",
+      "duration_seconds" : 7.49826431274414e-05,
+      "name" : "long-flag-parsing",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "flags",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "long-option-parsing",
+      "duration_seconds" : 0.00012004375457763672,
+      "name" : "long-option-parsing",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "options",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "short-option-parsing",
+      "duration_seconds" : 0.00012493133544921875,
+      "name" : "short-option-parsing",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "flags",
+        "options",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "positional-parsing",
+      "duration_seconds" : 0.00016796588897705078,
+      "name" : "positional-parsing",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "positionals"
+      ]
+    },
+    {
+      "display_name" : "required-positionals",
+      "duration_seconds" : 5.0902366638183594e-05,
+      "name" : "required-positionals",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "positionals",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "optional-positionals",
+      "duration_seconds" : 8.690357208251953e-05,
+      "name" : "optional-positionals",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "positionals",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "variadic-positionals",
+      "duration_seconds" : 0.0002779960632324219,
+      "name" : "variadic-positionals",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "positionals",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "terminator-passthrough",
+      "duration_seconds" : 5.996227264404297e-05,
+      "name" : "terminator-passthrough",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "passthrough"
+      ]
+    },
+    {
+      "display_name" : "integrated-parse",
+      "duration_seconds" : 0.0001310110092163086,
+      "name" : "integrated-parse",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "commands",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "unknown-command",
+      "duration_seconds" : 0.00010204315185546875,
+      "name" : "unknown-command",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "commands",
+        "diagnostics",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "default-child",
+      "duration_seconds" : 0.0001800060272216797,
+      "name" : "default-child",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "commands",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "flag-negation",
+      "duration_seconds" : 0.0001550912857055664,
+      "name" : "flag-negation",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "flags",
+        "parser"
+      ]
+    },
+    {
+      "display_name" : "required-options",
+      "duration_seconds" : 8.90493392944336e-05,
+      "name" : "required-options",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "options",
+        "parser",
+        "validation"
+      ]
+    },
+    {
+      "display_name" : "parse-time-value-validation",
+      "duration_seconds" : 0.00016307830810546875,
+      "name" : "parse-time-value-validation",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "parser",
+        "validation",
+        "values"
+      ]
+    },
+    {
+      "display_name" : "repeatable-options",
+      "duration_seconds" : 0.00020301342010498047,
+      "name" : "repeatable-options",
+      "status" : "passed",
+      "tags" : [
+        "argv",
+        "options",
+        "parser"
+      ]
+    }
+  ],
+  "skipped" : 0,
+  "title" : "Arguments flow tests",
+  "total" : 28
+}
