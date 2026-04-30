@@ -73,3 +73,48 @@ public struct ParsedInvocation: Sendable {
         flags[name] ?? defaultValue
     }
 }
+
+public extension ParsedInvocation {
+    func bindNormalized<Value>(
+        _ type: Value.Type = Value.self
+    ) throws -> Value
+    where
+        Value: ArgumentGroup & ArgumentNormalizable
+    {
+        var value = try bind(
+            type
+        )
+
+        try value.normalize()
+
+        return value
+    }
+
+    func bindValidated<Value>(
+        _ type: Value.Type = Value.self
+    ) throws -> Value
+    where
+        Value: ArgumentGroup & ArgumentValidatable
+    {
+        let value = try bind(
+            type
+        )
+
+        try value.validate()
+
+        return value
+    }
+
+    func bindResolved<Value>(
+        _ type: Value.Type = Value.self
+    ) throws -> Value.ResolvedArgumentValue
+    where
+        Value: ArgumentGroup & ArgumentResolvable
+    {
+        let value = try bind(
+            type
+        )
+
+        return try value.resolve()
+    }
+}
