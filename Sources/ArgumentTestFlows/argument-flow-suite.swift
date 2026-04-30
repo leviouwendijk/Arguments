@@ -44,6 +44,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         argumentLifecycleFlow,
         argumentParsedFlow,
         argumentProgramFlow,
+        argumentCommandAliasFlow,
 
         ecCompatibilityFlow,
     ]

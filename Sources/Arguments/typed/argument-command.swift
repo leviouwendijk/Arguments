@@ -2,6 +2,7 @@ public typealias ArgumentCommandType = any ArgumentCommand.Type
 
 public protocol ArgumentCommand: Sendable {
     static var name: String { get }
+    static var aliases: [String] { get }
     static var defaultChild: String? { get }
     static var children: [ArgumentCommandType] { get }
 
@@ -39,6 +40,10 @@ public protocol ParsedArgumentCommand: RunnableArgumentCommand {
 }
 
 public extension ArgumentCommand {
+    static var aliases: [String] {
+        []
+    }
+
     static var defaultChild: String? {
         nil
     }
@@ -55,6 +60,14 @@ public extension ArgumentCommand {
         let child = defaultChild
 
         return try cmd(name) {
+            for alias in aliases {
+                DynamicMetadata(
+                    .alias(
+                        CommandAlias(alias)
+                    )
+                )
+            }
+
             if let child {
                 DynamicMetadata(
                     .defaultChild(

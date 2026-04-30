@@ -99,14 +99,22 @@ public enum CommandSpecNormalizer {
     private static func validateChildren(
         _ children: [CommandSpec]
     ) throws {
-        var names: Set<CommandName> = []
+        var names: Set<String> = []
 
         for child in children {
-            guard !names.contains(child.name) else {
-                throw ArgumentSpecError.duplicate_command(child.name)
-            }
+            let childNames = [
+                child.name.rawValue,
+            ] + child.aliases.map(\.rawValue)
 
-            names.insert(child.name)
+            for name in childNames {
+                guard !names.contains(name) else {
+                    throw ArgumentSpecError.duplicate_command(
+                        CommandName(name)
+                    )
+                }
+
+                names.insert(name)
+            }
         }
     }
 }
