@@ -1328,11 +1328,37 @@ private extension ArgumentFlowSuite {
             }
         }
     }
+
     static var defaultChildFlow: TestFlow {
         TestFlow(
             "default-child",
             tags: ["argv", "parser", "commands"]
         ) {
+            Step("resolve default child at end of argv") {
+                let spec = try cmd("agentic") {
+                    defaultChild("run")
+
+                    try cmd("run") {
+                        flag("json")
+                    }
+                }
+
+                let invocation = try Arguments.parse(
+                    [
+                        "agentic",
+                    ],
+                    spec: spec
+                )
+
+                try Expect.equal(
+                    invocation.commandPath.map(\.rawValue),
+                    [
+                        "agentic",
+                        "run",
+                    ],
+                    "default-child.eof.commandPath"
+                )
+            }
             Step("resolve default child without consuming argv") {
                 let spec = try cmd("agentic") {
                     defaultChild("run")

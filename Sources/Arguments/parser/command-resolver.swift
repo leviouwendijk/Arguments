@@ -33,13 +33,34 @@ public enum CommandResolver {
             cursor.advance()
         }
 
-        while let current = cursor.peek() {
-            if let child = command.children.first(where: { matches(current, command: $0) }) {
+        while true {
+            guard let current = cursor.peek() else {
+                guard command.defaultChild != nil else {
+                    break
+                }
+
+                let child = try defaultChild(
+                    of: command
+                )
+
                 command = child
+
                 path.append(
                     child.name
                 )
+
+                continue
+            }
+
+            if let child = command.children.first(where: { matches(current, command: $0) }) {
+                command = child
+
+                path.append(
+                    child.name
+                )
+
                 cursor.advance()
+
                 continue
             }
 
@@ -52,9 +73,11 @@ public enum CommandResolver {
                 )
 
                 command = child
+
                 path.append(
                     child.name
                 )
+
                 continue
             }
 
