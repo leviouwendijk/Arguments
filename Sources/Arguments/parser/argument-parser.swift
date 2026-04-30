@@ -186,8 +186,8 @@ public enum ArgumentParser {
             valueSpec: option.value
         )
 
-        switch (option.repeatMode, option.take) {
-        case (.single, .one):
+        switch option.take {
+        case .one:
             guard invocation.values[option.name] == nil else {
                 throw ArgumentParseError.duplicate_value(
                     option.name
@@ -199,8 +199,8 @@ public enum ArgumentParser {
                 value,
             ]
 
-        case (.single, .many),
-             (.multiple, _):
+        case .repeating,
+             .many:
             invocation.repeatedValues[
                 option.name,
                 default: []
@@ -313,7 +313,8 @@ public enum ArgumentParser {
         invocation: inout ParsedInvocation
     ) throws {
         switch option.take {
-        case .one:
+        case .one,
+             .repeating:
             guard let value = cursor.peek() else {
                 throw ArgumentParseError.missing_value(original)
             }

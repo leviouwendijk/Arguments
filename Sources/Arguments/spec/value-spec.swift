@@ -61,13 +61,9 @@ public enum ValueArity: String, Sendable, Codable, Hashable, CaseIterable {
     case variadic
 }
 
-public enum RepeatMode: String, Sendable, Codable, Hashable, CaseIterable {
-    case single
-    case multiple
-}
-
 public enum OptionTake: String, Sendable, Codable, Hashable, CaseIterable {
     case one
+    case repeating
     case many
 }
 

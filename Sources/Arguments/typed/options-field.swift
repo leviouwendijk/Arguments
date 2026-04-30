@@ -1,6 +1,6 @@
 @propertyWrapper
-public struct Opt<Value: ArgumentValue>: ArgumentField {
-    private let storage: ArgumentFieldStorage<Value?>
+public struct Opts<Value: ArgumentValue>: ArgumentField {
+    private let storage: ArgumentFieldStorage<[Value]>
 
     private var name: ParamName
     private var aliases: [ParamName]
@@ -8,7 +8,7 @@ public struct Opt<Value: ArgumentValue>: ArgumentField {
     private var take: OptionTake
     private var help: String?
 
-    public var wrappedValue: Value? {
+    public var wrappedValue: [Value] {
         get {
             storage.value
         }
@@ -22,11 +22,33 @@ public struct Opt<Value: ArgumentValue>: ArgumentField {
         alias: String? = nil,
         aliases: [String] = [],
         short: Character? = nil,
-        take: OptionTake = .one,
+        take: OptionTake = .repeating,
         help: String? = nil
     ) {
         self.storage = ArgumentFieldStorage(
-            nil
+            []
+        )
+        self.name = ParamName(name)
+        self.aliases = .aliases(
+            alias,
+            aliases
+        )
+        self.short = short
+        self.take = take
+        self.help = help
+    }
+
+    public init(
+        wrappedValue: [Value],
+        _ name: String,
+        alias: String? = nil,
+        aliases: [String] = [],
+        short: Character? = nil,
+        take: OptionTake = .repeating,
+        help: String? = nil
+    ) {
+        self.storage = ArgumentFieldStorage(
+            wrappedValue
         )
         self.name = ParamName(name)
         self.aliases = .aliases(
@@ -58,9 +80,15 @@ public struct Opt<Value: ArgumentValue>: ArgumentField {
     public mutating func bind(
         _ invocation: ParsedInvocation
     ) throws {
-        wrappedValue = try invocation.value(
+        let values = try invocation.values(
             name,
             as: Value.self
         )
+
+        guard !values.isEmpty else {
+            return
+        }
+
+        wrappedValue = values
     }
 }

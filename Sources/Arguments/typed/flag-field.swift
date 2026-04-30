@@ -31,9 +31,10 @@ public struct Flag: ArgumentField {
             defaultValue
         )
         self.name = ParamName(name)
-        self.aliases = ([alias].compactMap { $0 } + aliases).map {
-            ParamName($0)
-        }
+        self.aliases = .aliases(
+            alias,
+            aliases
+        )
         self.short = short
         self.defaultValue = defaultValue
         self.negation = negation

@@ -16,6 +16,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         primitiveValueParserFlow,
         propertyWrapperFieldCollectionFlow,
         propertyWrapperBindingFlow,
+        typedGroupFlow,
         argvCursorFlow,
         commandResolutionFlow,
         longFlagParsingFlow,
@@ -1018,7 +1019,7 @@ private extension ArgumentFlowSuite {
                     opt(
                         "stop",
                         as: String.self,
-                        repeatMode: .multiple
+                        take: .repeating
                     )
                 }
 
@@ -1059,7 +1060,7 @@ private extension ArgumentFlowSuite {
                     opt(
                         "stop",
                         as: String.self,
-                        repeatMode: .multiple
+                        take: .repeating
                     )
                 }
 

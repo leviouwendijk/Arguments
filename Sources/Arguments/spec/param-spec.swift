@@ -33,7 +33,6 @@ public struct OptionSpec: Sendable {
     public var short: Character?
     public var value: ValueSpec
     public var arity: ValueArity
-    public var repeatMode: RepeatMode
     public var take: OptionTake
     public var defaultValue: String?
     public var help: String?
@@ -44,7 +43,6 @@ public struct OptionSpec: Sendable {
         short: Character? = nil,
         value: ValueSpec,
         arity: ValueArity = .required,
-        repeatMode: RepeatMode = .single,
         take: OptionTake = .one,
         defaultValue: String? = nil,
         help: String? = nil
@@ -54,7 +52,6 @@ public struct OptionSpec: Sendable {
         self.short = short
         self.value = value
         self.arity = arity
-        self.repeatMode = repeatMode
         self.take = take
         self.defaultValue = defaultValue
         self.help = help

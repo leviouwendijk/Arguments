@@ -62,7 +62,6 @@ public func opt<Value: ArgumentValue>(
     short: Character? = nil,
     as type: Value.Type = Value.self,
     arity: ValueArity = .optional,
-    repeatMode: RepeatMode = .single,
     take: OptionTake = .one,
     default defaultValue: Value? = nil,
     help: String? = nil
@@ -71,9 +70,9 @@ public func opt<Value: ArgumentValue>(
         .option(
             .init(
                 name: ParamName(name),
-                aliases: aliasNames(
-                    alias: alias,
-                    aliases: aliases
+                aliases: .aliases(
+                    alias,
+                    aliases
                 ),
                 short: short,
                 value: ValueSpec(
@@ -81,7 +80,6 @@ public func opt<Value: ArgumentValue>(
                     parser: Value.parser
                 ),
                 arity: arity,
-                repeatMode: repeatMode,
                 take: take,
                 defaultValue: defaultValue.map(Value.raw),
                 help: help
@@ -103,9 +101,9 @@ public func flag(
         .flag(
             .init(
                 name: ParamName(name),
-                aliases: aliasNames(
-                    alias: alias,
-                    aliases: aliases
+                aliases: .aliases(
+                    alias,
+                    aliases
                 ),
                 short: short,
                 defaultValue: defaultValue,
@@ -142,13 +140,4 @@ public func params(
     DynamicParams(
         params
     )
-}
-
-private func aliasNames(
-    alias: String?,
-    aliases: [String]
-) -> [ParamName] {
-    ([alias].compactMap { $0 } + aliases).map {
-        ParamName($0)
-    }
 }
