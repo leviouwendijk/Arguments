@@ -1,14 +1,14 @@
 {
-  "failed" : 0,
+  "failed" : 1,
   "failed_names" : [
-
+    "default-child"
   ],
-  "generated_at" : "2026-04-30T14:11:10Z",
-  "passed" : 40,
+  "generated_at" : "2026-04-30T15:45:03Z",
+  "passed" : 39,
   "results" : [
     {
       "display_name" : "command-metadata",
-      "duration_seconds" : 0.0014220476150512695,
+      "duration_seconds" : 0.0010390281677246094,
       "name" : "command-metadata",
       "status" : "passed",
       "tags" : [
@@ -19,7 +19,7 @@
     },
     {
       "display_name" : "dynamic-parameter-dsl",
-      "duration_seconds" : 0.0008620023727416992,
+      "duration_seconds" : 0.0006020069122314453,
       "name" : "dynamic-parameter-dsl",
       "status" : "passed",
       "tags" : [
@@ -30,7 +30,7 @@
     },
     {
       "display_name" : "parameter-groups",
-      "duration_seconds" : 0.0010429620742797852,
+      "duration_seconds" : 0.000577092170715332,
       "name" : "parameter-groups",
       "status" : "passed",
       "tags" : [
@@ -43,7 +43,7 @@
     },
     {
       "display_name" : "help-rendering",
-      "duration_seconds" : 0.0016970634460449219,
+      "duration_seconds" : 0.0006430149078369141,
       "name" : "help-rendering",
       "status" : "passed",
       "tags" : [
@@ -54,7 +54,7 @@
     },
     {
       "display_name" : "argument-application",
-      "duration_seconds" : 0.001096963882446289,
+      "duration_seconds" : 0.0010230541229248047,
       "name" : "argument-application",
       "status" : "passed",
       "tags" : [
@@ -65,7 +65,7 @@
     },
     {
       "display_name" : "duplicate-param-validation",
-      "duration_seconds" : 0.0002570152282714844,
+      "duration_seconds" : 0.0005900859832763672,
       "name" : "duplicate-param-validation",
       "status" : "passed",
       "tags" : [
@@ -75,7 +75,7 @@
     },
     {
       "display_name" : "duplicate-short-validation",
-      "duration_seconds" : 0.00023996829986572266,
+      "duration_seconds" : 0.0005519390106201172,
       "name" : "duplicate-short-validation",
       "status" : "passed",
       "tags" : [
@@ -85,7 +85,7 @@
     },
     {
       "display_name" : "duplicate-child-validation",
-      "duration_seconds" : 0.0002219676971435547,
+      "duration_seconds" : 0.0002009868621826172,
       "name" : "duplicate-child-validation",
       "status" : "passed",
       "tags" : [
@@ -96,7 +96,7 @@
     },
     {
       "display_name" : "primitive-value-parsers",
-      "duration_seconds" : 0.0003108978271484375,
+      "duration_seconds" : 0.00021195411682128906,
       "name" : "primitive-value-parsers",
       "status" : "passed",
       "tags" : [
@@ -106,7 +106,7 @@
     },
     {
       "display_name" : "property-wrapper-field-collection",
-      "duration_seconds" : 0.0007990598678588867,
+      "duration_seconds" : 0.0005499124526977539,
       "name" : "property-wrapper-field-collection",
       "status" : "passed",
       "tags" : [
@@ -117,7 +117,7 @@
     },
     {
       "display_name" : "property-wrapper-binding",
-      "duration_seconds" : 0.0003669261932373047,
+      "duration_seconds" : 0.0007430315017700195,
       "name" : "property-wrapper-binding",
       "status" : "passed",
       "tags" : [
@@ -128,7 +128,7 @@
     },
     {
       "display_name" : "typed-groups",
-      "duration_seconds" : 0.0006399154663085938,
+      "duration_seconds" : 0.0013250112533569336,
       "name" : "typed-groups",
       "status" : "passed",
       "tags" : [
@@ -140,7 +140,7 @@
     },
     {
       "display_name" : "argv-cursor",
-      "duration_seconds" : 0.00020706653594970703,
+      "duration_seconds" : 0.0004030466079711914,
       "name" : "argv-cursor",
       "status" : "passed",
       "tags" : [
@@ -150,7 +150,7 @@
     },
     {
       "display_name" : "command-resolution",
-      "duration_seconds" : 0.00025200843811035156,
+      "duration_seconds" : 0.000514984130859375,
       "name" : "command-resolution",
       "status" : "passed",
       "tags" : [
@@ -161,7 +161,7 @@
     },
     {
       "display_name" : "long-flag-parsing",
-      "duration_seconds" : 0.0002480745315551758,
+      "duration_seconds" : 0.0004980564117431641,
       "name" : "long-flag-parsing",
       "status" : "passed",
       "tags" : [
@@ -172,7 +172,7 @@
     },
     {
       "display_name" : "long-option-parsing",
-      "duration_seconds" : 0.00027000904083251953,
+      "duration_seconds" : 0.0005489587783813477,
       "name" : "long-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -183,7 +183,7 @@
     },
     {
       "display_name" : "short-option-parsing",
-      "duration_seconds" : 0.00026798248291015625,
+      "duration_seconds" : 0.0005880594253540039,
       "name" : "short-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -195,7 +195,7 @@
     },
     {
       "display_name" : "positional-parsing",
-      "duration_seconds" : 0.0006669759750366211,
+      "duration_seconds" : 0.0005959272384643555,
       "name" : "positional-parsing",
       "status" : "passed",
       "tags" : [
@@ -206,7 +206,7 @@
     },
     {
       "display_name" : "required-positionals",
-      "duration_seconds" : 0.0002340078353881836,
+      "duration_seconds" : 0.00046694278717041016,
       "name" : "required-positionals",
       "status" : "passed",
       "tags" : [
@@ -218,7 +218,7 @@
     },
     {
       "display_name" : "optional-positionals",
-      "duration_seconds" : 0.00026702880859375,
+      "duration_seconds" : 0.0005129575729370117,
       "name" : "optional-positionals",
       "status" : "passed",
       "tags" : [
@@ -230,7 +230,7 @@
     },
     {
       "display_name" : "variadic-positionals",
-      "duration_seconds" : 0.00034999847412109375,
+      "duration_seconds" : 0.0007179975509643555,
       "name" : "variadic-positionals",
       "status" : "passed",
       "tags" : [
@@ -242,7 +242,7 @@
     },
     {
       "display_name" : "terminator-passthrough",
-      "duration_seconds" : 0.00023806095123291016,
+      "duration_seconds" : 0.0004979372024536133,
       "name" : "terminator-passthrough",
       "status" : "passed",
       "tags" : [
@@ -253,7 +253,7 @@
     },
     {
       "display_name" : "integrated-parse",
-      "duration_seconds" : 0.0002689361572265625,
+      "duration_seconds" : 0.0005379915237426758,
       "name" : "integrated-parse",
       "status" : "passed",
       "tags" : [
@@ -264,7 +264,7 @@
     },
     {
       "display_name" : "unknown-command",
-      "duration_seconds" : 0.0017720460891723633,
+      "duration_seconds" : 0.0004450082778930664,
       "name" : "unknown-command",
       "status" : "passed",
       "tags" : [
@@ -276,9 +276,9 @@
     },
     {
       "display_name" : "default-child",
-      "duration_seconds" : 0.00032806396484375,
+      "duration_seconds" : 0.0007669925689697266,
       "name" : "default-child",
-      "status" : "passed",
+      "status" : "failed",
       "tags" : [
         "argv",
         "commands",
@@ -287,7 +287,7 @@
     },
     {
       "display_name" : "flag-negation",
-      "duration_seconds" : 0.00026595592498779297,
+      "duration_seconds" : 0.0004769563674926758,
       "name" : "flag-negation",
       "status" : "passed",
       "tags" : [
@@ -298,7 +298,7 @@
     },
     {
       "display_name" : "required-options",
-      "duration_seconds" : 0.0002620220184326172,
+      "duration_seconds" : 0.0005040168762207031,
       "name" : "required-options",
       "status" : "passed",
       "tags" : [
@@ -310,7 +310,7 @@
     },
     {
       "display_name" : "parse-time-value-validation",
-      "duration_seconds" : 0.00029599666595458984,
+      "duration_seconds" : 0.0002899169921875,
       "name" : "parse-time-value-validation",
       "status" : "passed",
       "tags" : [
@@ -322,7 +322,7 @@
     },
     {
       "display_name" : "repeatable-options",
-      "duration_seconds" : 0.0003069639205932617,
+      "duration_seconds" : 0.00040400028228759766,
       "name" : "repeatable-options",
       "status" : "passed",
       "tags" : [
@@ -333,7 +333,7 @@
     },
     {
       "display_name" : "param-aliases",
-      "duration_seconds" : 0.00029098987579345703,
+      "duration_seconds" : 0.000516057014465332,
       "name" : "param-aliases",
       "status" : "passed",
       "tags" : [
@@ -344,7 +344,7 @@
     },
     {
       "display_name" : "many-options",
-      "duration_seconds" : 0.0005249977111816406,
+      "duration_seconds" : 0.0005279779434204102,
       "name" : "many-options",
       "status" : "passed",
       "tags" : [
@@ -355,7 +355,7 @@
     },
     {
       "display_name" : "default-values",
-      "duration_seconds" : 0.0005350112915039062,
+      "duration_seconds" : 0.0004820823669433594,
       "name" : "default-values",
       "status" : "passed",
       "tags" : [
@@ -366,7 +366,7 @@
     },
     {
       "display_name" : "decimal-values",
-      "duration_seconds" : 0.0012140274047851562,
+      "duration_seconds" : 0.0012930631637573242,
       "name" : "decimal-values",
       "status" : "passed",
       "tags" : [
@@ -377,7 +377,7 @@
     },
     {
       "display_name" : "builder-ergonomics",
-      "duration_seconds" : 0.00042700767517089844,
+      "duration_seconds" : 0.0004220008850097656,
       "name" : "builder-ergonomics",
       "status" : "passed",
       "tags" : [
@@ -389,7 +389,7 @@
     },
     {
       "display_name" : "typed-binding-convenience",
-      "duration_seconds" : 0.0005869865417480469,
+      "duration_seconds" : 0.00045800209045410156,
       "name" : "typed-binding-convenience",
       "status" : "passed",
       "tags" : [
@@ -401,7 +401,7 @@
     },
     {
       "display_name" : "argument-lifecycle",
-      "duration_seconds" : 0.000496983528137207,
+      "duration_seconds" : 0.0007659196853637695,
       "name" : "argument-lifecycle",
       "status" : "passed",
       "tags" : [
@@ -415,7 +415,7 @@
     },
     {
       "display_name" : "argument-parsed",
-      "duration_seconds" : 0.000655055046081543,
+      "duration_seconds" : 0.0007710456848144531,
       "name" : "argument-parsed",
       "status" : "passed",
       "tags" : [
@@ -428,7 +428,7 @@
     },
     {
       "display_name" : "argument-program",
-      "duration_seconds" : 0.0006010532379150391,
+      "duration_seconds" : 0.000576019287109375,
       "name" : "argument-program",
       "status" : "passed",
       "tags" : [
@@ -440,7 +440,7 @@
     },
     {
       "display_name" : "argument-command-aliases",
-      "duration_seconds" : 0.00048100948333740234,
+      "duration_seconds" : 0.0004819631576538086,
       "name" : "argument-command-aliases",
       "status" : "passed",
       "tags" : [
@@ -452,7 +452,7 @@
     },
     {
       "display_name" : "ec-compatibility",
-      "duration_seconds" : 0.0011900663375854492,
+      "duration_seconds" : 0.0016709566116333008,
       "name" : "ec-compatibility",
       "status" : "passed",
       "tags" : [

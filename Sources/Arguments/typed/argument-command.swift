@@ -3,10 +3,21 @@ public typealias ArgumentCommandType = any ArgumentCommand.Type
 public protocol ArgumentCommand: Sendable {
     static var name: String { get }
     static var aliases: [String] { get }
-    static var defaultChild: String? { get }
     static var children: [ArgumentCommandType] { get }
 
     static func components() throws -> [CommandComponentLowerable]
+}
+
+public protocol ArgumentCommandWithDefaultChild: ArgumentCommand {
+    associatedtype DefaultChild: ArgumentCommand
+
+    static var defaultChild: DefaultChild.Type { get }
+}
+
+extension ArgumentCommandWithDefaultChild {
+    static var _defaultChildCommand: ArgumentCommandType {
+        defaultChild
+    }
 }
 
 public protocol ArgumentCommandFallback: ArgumentCommand {
@@ -44,10 +55,6 @@ public extension ArgumentCommand {
         []
     }
 
-    static var defaultChild: String? {
-        nil
-    }
-
     static var children: [ArgumentCommandType] {
         []
     }
@@ -57,7 +64,9 @@ public extension ArgumentCommand {
     }
 
     static func spec() throws -> CommandSpec {
-        let child = defaultChild
+        let defaultChild = (
+            Self.self as? any ArgumentCommandWithDefaultChild.Type
+        )?._defaultChildCommand
 
         return try cmd(name) {
             for alias in aliases {
@@ -68,10 +77,10 @@ public extension ArgumentCommand {
                 )
             }
 
-            if let child {
+            if let defaultChild {
                 DynamicMetadata(
                     .defaultChild(
-                        CommandName(child)
+                        CommandName(defaultChild.name)
                     )
                 )
             }

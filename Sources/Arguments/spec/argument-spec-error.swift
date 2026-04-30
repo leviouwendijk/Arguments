@@ -5,6 +5,10 @@ public enum ArgumentSpecError: Error, LocalizedError, Sendable, Equatable {
     case duplicate_short(Character)
     case duplicate_command(CommandName)
     case invalid_variadic_position(ParamName)
+    case missing_default_child(
+        parent: CommandName,
+        child: CommandName
+    )
 
     public var errorDescription: String? {
         switch self {
@@ -19,6 +23,9 @@ public enum ArgumentSpecError: Error, LocalizedError, Sendable, Equatable {
 
         case .invalid_variadic_position(let name):
             "Variadic positional argument '\(name.rawValue)' must be the last positional argument."
+
+        case .missing_default_child(let parent, let child):
+            "Command '\(parent.rawValue)' declares missing default child '\(child.rawValue)'."
         }
     }
 }

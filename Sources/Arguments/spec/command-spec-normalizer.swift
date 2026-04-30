@@ -8,6 +8,7 @@ public enum CommandSpecNormalizer {
         try validateShortNames(flattenedParams)
         try validateVariadicPositionals(flattenedParams)
         try validateChildren(spec.children)
+        try validateDefaultChild(spec)
 
         var copy = spec
         copy.params = try spec.params.map(normalizeParam)
@@ -115,6 +116,21 @@ public enum CommandSpecNormalizer {
 
                 names.insert(name)
             }
+        }
+    }
+
+    private static func validateDefaultChild(
+        _ spec: CommandSpec
+    ) throws {
+        guard let defaultChild = spec.defaultChild else {
+            return
+        }
+
+        guard spec.children.contains(where: { $0.name == defaultChild }) else {
+            throw ArgumentSpecError.missing_default_child(
+                parent: spec.name,
+                child: defaultChild
+            )
         }
     }
 }
