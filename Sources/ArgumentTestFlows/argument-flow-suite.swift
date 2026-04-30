@@ -1446,22 +1446,14 @@ private extension ArgumentFlowSuite {
             }
 
             Step("missing configured default child throws") {
-                let spec = try cmd("agentic") {
-                    defaultChild("run")
-
-                    try cmd("chat") {
-                        flag("ephemeral")
-                    }
-                }
-
                 try Expect.throwsError("missing-default-child") {
-                    _ = try Arguments.parse(
-                        [
-                            "agentic",
-                            "hello",
-                        ],
-                        spec: spec
-                    )
+                    _ = try cmd("agentic") {
+                        defaultChild("run")
+
+                        try cmd("chat") {
+                            flag("ephemeral")
+                        }
+                    }
                 }
             }
         }

@@ -1,14 +1,14 @@
 {
-  "failed" : 1,
+  "failed" : 0,
   "failed_names" : [
-    "default-child"
+
   ],
-  "generated_at" : "2026-04-30T15:45:03Z",
-  "passed" : 39,
+  "generated_at" : "2026-04-30T15:46:24Z",
+  "passed" : 40,
   "results" : [
     {
       "display_name" : "command-metadata",
-      "duration_seconds" : 0.0010390281677246094,
+      "duration_seconds" : 0.0013949871063232422,
       "name" : "command-metadata",
       "status" : "passed",
       "tags" : [
@@ -19,7 +19,7 @@
     },
     {
       "display_name" : "dynamic-parameter-dsl",
-      "duration_seconds" : 0.0006020069122314453,
+      "duration_seconds" : 0.0008480548858642578,
       "name" : "dynamic-parameter-dsl",
       "status" : "passed",
       "tags" : [
@@ -30,7 +30,7 @@
     },
     {
       "display_name" : "parameter-groups",
-      "duration_seconds" : 0.000577092170715332,
+      "duration_seconds" : 0.0012999773025512695,
       "name" : "parameter-groups",
       "status" : "passed",
       "tags" : [
@@ -43,7 +43,7 @@
     },
     {
       "display_name" : "help-rendering",
-      "duration_seconds" : 0.0006430149078369141,
+      "duration_seconds" : 0.0015380382537841797,
       "name" : "help-rendering",
       "status" : "passed",
       "tags" : [
@@ -54,7 +54,7 @@
     },
     {
       "display_name" : "argument-application",
-      "duration_seconds" : 0.0010230541229248047,
+      "duration_seconds" : 0.001096963882446289,
       "name" : "argument-application",
       "status" : "passed",
       "tags" : [
@@ -65,7 +65,7 @@
     },
     {
       "display_name" : "duplicate-param-validation",
-      "duration_seconds" : 0.0005900859832763672,
+      "duration_seconds" : 0.0006090402603149414,
       "name" : "duplicate-param-validation",
       "status" : "passed",
       "tags" : [
@@ -75,7 +75,7 @@
     },
     {
       "display_name" : "duplicate-short-validation",
-      "duration_seconds" : 0.0005519390106201172,
+      "duration_seconds" : 0.0006029605865478516,
       "name" : "duplicate-short-validation",
       "status" : "passed",
       "tags" : [
@@ -85,7 +85,7 @@
     },
     {
       "display_name" : "duplicate-child-validation",
-      "duration_seconds" : 0.0002009868621826172,
+      "duration_seconds" : 0.0005600452423095703,
       "name" : "duplicate-child-validation",
       "status" : "passed",
       "tags" : [
@@ -96,7 +96,7 @@
     },
     {
       "display_name" : "primitive-value-parsers",
-      "duration_seconds" : 0.00021195411682128906,
+      "duration_seconds" : 0.0005919933319091797,
       "name" : "primitive-value-parsers",
       "status" : "passed",
       "tags" : [
@@ -106,7 +106,7 @@
     },
     {
       "display_name" : "property-wrapper-field-collection",
-      "duration_seconds" : 0.0005499124526977539,
+      "duration_seconds" : 0.0008749961853027344,
       "name" : "property-wrapper-field-collection",
       "status" : "passed",
       "tags" : [
@@ -117,7 +117,7 @@
     },
     {
       "display_name" : "property-wrapper-binding",
-      "duration_seconds" : 0.0007430315017700195,
+      "duration_seconds" : 0.0009039640426635742,
       "name" : "property-wrapper-binding",
       "status" : "passed",
       "tags" : [
@@ -128,7 +128,7 @@
     },
     {
       "display_name" : "typed-groups",
-      "duration_seconds" : 0.0013250112533569336,
+      "duration_seconds" : 0.0014100074768066406,
       "name" : "typed-groups",
       "status" : "passed",
       "tags" : [
@@ -150,7 +150,7 @@
     },
     {
       "display_name" : "command-resolution",
-      "duration_seconds" : 0.000514984130859375,
+      "duration_seconds" : 0.0005190372467041016,
       "name" : "command-resolution",
       "status" : "passed",
       "tags" : [
@@ -161,7 +161,7 @@
     },
     {
       "display_name" : "long-flag-parsing",
-      "duration_seconds" : 0.0004980564117431641,
+      "duration_seconds" : 0.0005019903182983398,
       "name" : "long-flag-parsing",
       "status" : "passed",
       "tags" : [
@@ -172,7 +172,7 @@
     },
     {
       "display_name" : "long-option-parsing",
-      "duration_seconds" : 0.0005489587783813477,
+      "duration_seconds" : 0.0005419254302978516,
       "name" : "long-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -183,7 +183,7 @@
     },
     {
       "display_name" : "short-option-parsing",
-      "duration_seconds" : 0.0005880594253540039,
+      "duration_seconds" : 0.0005500316619873047,
       "name" : "short-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -195,7 +195,7 @@
     },
     {
       "display_name" : "positional-parsing",
-      "duration_seconds" : 0.0005959272384643555,
+      "duration_seconds" : 0.0005960464477539062,
       "name" : "positional-parsing",
       "status" : "passed",
       "tags" : [
@@ -206,7 +206,7 @@
     },
     {
       "display_name" : "required-positionals",
-      "duration_seconds" : 0.00046694278717041016,
+      "duration_seconds" : 0.0005029439926147461,
       "name" : "required-positionals",
       "status" : "passed",
       "tags" : [
@@ -218,7 +218,7 @@
     },
     {
       "display_name" : "optional-positionals",
-      "duration_seconds" : 0.0005129575729370117,
+      "duration_seconds" : 0.0005199909210205078,
       "name" : "optional-positionals",
       "status" : "passed",
       "tags" : [
@@ -230,7 +230,7 @@
     },
     {
       "display_name" : "variadic-positionals",
-      "duration_seconds" : 0.0007179975509643555,
+      "duration_seconds" : 0.0007159709930419922,
       "name" : "variadic-positionals",
       "status" : "passed",
       "tags" : [
@@ -242,7 +242,7 @@
     },
     {
       "display_name" : "terminator-passthrough",
-      "duration_seconds" : 0.0004979372024536133,
+      "duration_seconds" : 0.0004400014877319336,
       "name" : "terminator-passthrough",
       "status" : "passed",
       "tags" : [
@@ -253,7 +253,7 @@
     },
     {
       "display_name" : "integrated-parse",
-      "duration_seconds" : 0.0005379915237426758,
+      "duration_seconds" : 0.0004690885543823242,
       "name" : "integrated-parse",
       "status" : "passed",
       "tags" : [
@@ -264,7 +264,7 @@
     },
     {
       "display_name" : "unknown-command",
-      "duration_seconds" : 0.0004450082778930664,
+      "duration_seconds" : 0.00044798851013183594,
       "name" : "unknown-command",
       "status" : "passed",
       "tags" : [
@@ -276,9 +276,9 @@
     },
     {
       "display_name" : "default-child",
-      "duration_seconds" : 0.0007669925689697266,
+      "duration_seconds" : 0.0005429983139038086,
       "name" : "default-child",
-      "status" : "failed",
+      "status" : "passed",
       "tags" : [
         "argv",
         "commands",
@@ -287,7 +287,7 @@
     },
     {
       "display_name" : "flag-negation",
-      "duration_seconds" : 0.0004769563674926758,
+      "duration_seconds" : 0.0004630088806152344,
       "name" : "flag-negation",
       "status" : "passed",
       "tags" : [
@@ -298,7 +298,7 @@
     },
     {
       "display_name" : "required-options",
-      "duration_seconds" : 0.0005040168762207031,
+      "duration_seconds" : 0.0004470348358154297,
       "name" : "required-options",
       "status" : "passed",
       "tags" : [
@@ -310,7 +310,7 @@
     },
     {
       "display_name" : "parse-time-value-validation",
-      "duration_seconds" : 0.0002899169921875,
+      "duration_seconds" : 0.0005210638046264648,
       "name" : "parse-time-value-validation",
       "status" : "passed",
       "tags" : [
@@ -322,7 +322,7 @@
     },
     {
       "display_name" : "repeatable-options",
-      "duration_seconds" : 0.00040400028228759766,
+      "duration_seconds" : 0.0005630254745483398,
       "name" : "repeatable-options",
       "status" : "passed",
       "tags" : [
@@ -333,7 +333,7 @@
     },
     {
       "display_name" : "param-aliases",
-      "duration_seconds" : 0.000516057014465332,
+      "duration_seconds" : 0.000491023063659668,
       "name" : "param-aliases",
       "status" : "passed",
       "tags" : [
@@ -344,7 +344,7 @@
     },
     {
       "display_name" : "many-options",
-      "duration_seconds" : 0.0005279779434204102,
+      "duration_seconds" : 0.0005509853363037109,
       "name" : "many-options",
       "status" : "passed",
       "tags" : [
@@ -355,7 +355,7 @@
     },
     {
       "display_name" : "default-values",
-      "duration_seconds" : 0.0004820823669433594,
+      "duration_seconds" : 0.0004489421844482422,
       "name" : "default-values",
       "status" : "passed",
       "tags" : [
@@ -366,7 +366,7 @@
     },
     {
       "display_name" : "decimal-values",
-      "duration_seconds" : 0.0012930631637573242,
+      "duration_seconds" : 0.0008859634399414062,
       "name" : "decimal-values",
       "status" : "passed",
       "tags" : [
@@ -377,7 +377,7 @@
     },
     {
       "display_name" : "builder-ergonomics",
-      "duration_seconds" : 0.0004220008850097656,
+      "duration_seconds" : 0.0006220340728759766,
       "name" : "builder-ergonomics",
       "status" : "passed",
       "tags" : [
@@ -389,7 +389,7 @@
     },
     {
       "display_name" : "typed-binding-convenience",
-      "duration_seconds" : 0.00045800209045410156,
+      "duration_seconds" : 0.0005819797515869141,
       "name" : "typed-binding-convenience",
       "status" : "passed",
       "tags" : [
@@ -401,7 +401,7 @@
     },
     {
       "display_name" : "argument-lifecycle",
-      "duration_seconds" : 0.0007659196853637695,
+      "duration_seconds" : 0.0007699728012084961,
       "name" : "argument-lifecycle",
       "status" : "passed",
       "tags" : [
@@ -415,7 +415,7 @@
     },
     {
       "display_name" : "argument-parsed",
-      "duration_seconds" : 0.0007710456848144531,
+      "duration_seconds" : 0.0007569789886474609,
       "name" : "argument-parsed",
       "status" : "passed",
       "tags" : [
@@ -428,7 +428,7 @@
     },
     {
       "display_name" : "argument-program",
-      "duration_seconds" : 0.000576019287109375,
+      "duration_seconds" : 0.0005849599838256836,
       "name" : "argument-program",
       "status" : "passed",
       "tags" : [
@@ -440,7 +440,7 @@
     },
     {
       "display_name" : "argument-command-aliases",
-      "duration_seconds" : 0.0004819631576538086,
+      "duration_seconds" : 0.00047004222869873047,
       "name" : "argument-command-aliases",
       "status" : "passed",
       "tags" : [
@@ -452,7 +452,7 @@
     },
     {
       "display_name" : "ec-compatibility",
-      "duration_seconds" : 0.0016709566116333008,
+      "duration_seconds" : 0.001649022102355957,
       "name" : "ec-compatibility",
       "status" : "passed",
       "tags" : [
