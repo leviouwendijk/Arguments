@@ -1,23 +1,18 @@
 public typealias ArgumentCommandType = any ArgumentCommand.Type
 
 public protocol ArgumentCommand: Sendable {
+    associatedtype DefaultChild: ArgumentCommand = NoDefaultArgumentCommand
+
     static var name: String { get }
     static var aliases: [String] { get }
+    static var defaultChild: DefaultChild.Type { get }
     static var children: [ArgumentCommandType] { get }
 
     static func components() throws -> [CommandComponentLowerable]
 }
 
-public protocol ArgumentCommandWithDefaultChild: ArgumentCommand {
-    associatedtype DefaultChild: ArgumentCommand
-
-    static var defaultChild: DefaultChild.Type { get }
-}
-
-extension ArgumentCommandWithDefaultChild {
-    static var _defaultChildCommand: ArgumentCommandType {
-        defaultChild
-    }
+public enum NoDefaultArgumentCommand: ArgumentCommand {
+    public static let name = "__arguments_no_default_child"
 }
 
 public protocol ArgumentCommandFallback: ArgumentCommand {
@@ -64,9 +59,7 @@ public extension ArgumentCommand {
     }
 
     static func spec() throws -> CommandSpec {
-        let defaultChild = (
-            Self.self as? any ArgumentCommandWithDefaultChild.Type
-        )?._defaultChildCommand
+        let defaultChild = resolvedDefaultChild()
 
         return try cmd(name) {
             for alias in aliases {
@@ -91,6 +84,21 @@ public extension ArgumentCommand {
                 try cmd($0)
             }
         }
+    }
+
+    private static func resolvedDefaultChild() -> ArgumentCommandType? {
+        guard DefaultChild.self != NoDefaultArgumentCommand.self else {
+            return nil
+        }
+
+        return defaultChild
+    }
+}
+
+public extension ArgumentCommand
+where DefaultChild == NoDefaultArgumentCommand {
+    static var defaultChild: NoDefaultArgumentCommand.Type {
+        NoDefaultArgumentCommand.self
     }
 }
 
