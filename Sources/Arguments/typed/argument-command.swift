@@ -8,6 +8,12 @@ public protocol ArgumentCommand: Sendable {
     static func components() throws -> [CommandComponentLowerable]
 }
 
+public protocol ArgumentCommandFallback: ArgumentCommand {
+    static func fallback(
+        _ invocation: ParsedInvocation
+    ) async throws
+}
+
 public protocol RunnableArgumentCommand: ArgumentCommand {
     static func run(
         _ invocation: ParsedInvocation
@@ -64,8 +70,16 @@ public extension ArgumentCommand {
             }
         }
     }
+}
 
-    static func applicationComponents(
+extension ArgumentCommand {
+    static func routes() -> [ArgumentApplicationComponent] {
+        children.flatMap {
+            $0.routeComponents()
+        }
+    }
+
+    static func routeComponents(
         below prefix: [String] = []
     ) -> [ArgumentApplicationComponent] {
         let path = prefix + [
@@ -73,7 +87,7 @@ public extension ArgumentCommand {
         ]
 
         var components = children.flatMap {
-            $0.applicationComponents(
+            $0.routeComponents(
                 below: path
             )
         }
@@ -92,12 +106,6 @@ public extension ArgumentCommand {
         }
 
         return components
-    }
-
-    static func childApplicationComponents() -> [ArgumentApplicationComponent] {
-        children.flatMap {
-            $0.applicationComponents()
-        }
     }
 }
 
@@ -149,14 +157,21 @@ public func cmd(
     try type.spec()
 }
 
-public func commands(
-    _ type: ArgumentCommandType
-) -> [ArgumentApplicationComponent] {
-    type.applicationComponents()
-}
+public extension ArgumentCommand {
+    static func main() async {
+        await ArgumentProgram.main(
+            command: Self.self
+        )
+    }
 
-public func childCommands(
-    _ type: ArgumentCommandType
-) -> [ArgumentApplicationComponent] {
-    type.childApplicationComponents()
+    static func run(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        )
+    ) async -> Int32 {
+        await ArgumentProgram.run(
+            arguments: arguments,
+            command: Self.self
+        )
+    }
 }

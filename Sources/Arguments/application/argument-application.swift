@@ -6,16 +6,19 @@ public struct ArgumentApplication: Sendable {
 
     private var routes: [ArgumentRoute]
     private var defaultHandler: ArgumentCommandHandler?
+    private var fallbackHandler: ArgumentCommandHandler?
 
     public init(
         spec: CommandSpec,
         showsHelpForUnhandledCommand: Bool = true,
+        fallbackHandler: ArgumentCommandHandler? = nil,
         @ArgumentApplicationBuilder _ build: () -> [ArgumentApplicationComponent]
     ) {
         self.spec = spec
         self.showsHelpForUnhandledCommand = showsHelpForUnhandledCommand
         self.routes = []
         self.defaultHandler = nil
+        self.fallbackHandler = fallbackHandler
 
         for component in build() {
             switch component {
@@ -58,6 +61,13 @@ public struct ArgumentApplication: Sendable {
 
         if let route = routes.first(where: { $0.path == relativePath }) {
             try await route.run(
+                invocation
+            )
+            return
+        }
+
+        if let fallbackHandler {
+            try await fallbackHandler(
                 invocation
             )
             return

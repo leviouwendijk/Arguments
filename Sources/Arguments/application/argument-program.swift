@@ -56,6 +56,76 @@ public enum ArgumentProgram {
         }
     }
 
+    public static func main<Root: ArgumentCommand>(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        ),
+        command root: Root.Type,
+        showsHelpForUnhandledCommand: Bool = true,
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
+            []
+        }
+    ) async -> Never {
+        let code = await run(
+            arguments: arguments,
+            command: root,
+            showsHelpForUnhandledCommand: showsHelpForUnhandledCommand,
+            build
+        )
+
+        Foundation.exit(
+            code
+        )
+    }
+
+    public static func run<Root: ArgumentCommand>(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        ),
+        command root: Root.Type,
+        showsHelpForUnhandledCommand: Bool = true,
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
+            []
+        }
+    ) async -> Int32 {
+        let fallbackHandler: ArgumentCommandHandler? = {
+            guard let fallback = Root.self as? any ArgumentCommandFallback.Type else {
+                return nil
+            }
+
+            return { invocation in
+                try await fallback.fallback(
+                    invocation
+                )
+            }
+        }()
+
+        do {
+            let application = ArgumentApplication(
+                spec: try root.spec(),
+                showsHelpForUnhandledCommand: showsHelpForUnhandledCommand,
+                fallbackHandler: fallbackHandler
+            ) {
+                root.routes()
+                build()
+            }
+
+            try await application.run(
+                arguments
+            )
+
+            return 0
+        } catch {
+            eprint(
+                render(
+                    error
+                )
+            )
+
+            return 1
+        }
+    }
+
     private static func render(
         _ error: Error
     ) -> String {
@@ -73,47 +143,5 @@ public enum ArgumentProgram {
                 (message + "\n").utf8
             )
         )
-    }
-}
-
-extension ArgumentProgram {
-    public static func main<Root: ArgumentCommand>(
-        arguments: [String] = Array(
-            CommandLine.arguments.dropFirst()
-        ),
-        command root: Root.Type,
-        showsHelpForUnhandledCommand: Bool = true,
-        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
-            []
-        }
-    ) async -> Never {
-        await main(
-            arguments: arguments,
-            spec: try root.spec(),
-            showsHelpForUnhandledCommand: showsHelpForUnhandledCommand
-        ) {
-            root.childApplicationComponents()
-            build()
-        }
-    }
-
-    public static func run<Root: ArgumentCommand>(
-        arguments: [String] = Array(
-            CommandLine.arguments.dropFirst()
-        ),
-        command root: Root.Type,
-        showsHelpForUnhandledCommand: Bool = true,
-        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
-            []
-        }
-    ) async -> Int32 {
-        await run(
-            arguments: arguments,
-            spec: try root.spec(),
-            showsHelpForUnhandledCommand: showsHelpForUnhandledCommand
-        ) {
-            root.childApplicationComponents()
-            build()
-        }
     }
 }

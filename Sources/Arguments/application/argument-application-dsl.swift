@@ -39,6 +39,12 @@ public func command(
     )
 }
 
+public func command(
+    _ type: ArgumentCommandType
+) -> [ArgumentApplicationComponent] {
+    type.routeComponents()
+}
+
 public func defaultCommand(
     use handler: @escaping ArgumentCommandHandler
 ) -> ArgumentApplicationComponent {
