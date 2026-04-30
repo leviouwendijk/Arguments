@@ -9,6 +9,14 @@ public enum ArgumentFieldCollector {
         }
     }
 
+    public static func params<Value: ArgumentGroup>(
+        of type: Value.Type
+    ) throws -> [ParamSpec] {
+        try params(
+            of: Value()
+        )
+    }
+
     public static func bind<Value>(
         _ invocation: ParsedInvocation,
         into value: inout Value
@@ -34,6 +42,20 @@ public enum ArgumentFieldCollector {
 
             mirror = parent
         }
+    }
+
+    public static func bind<Value: ArgumentGroup>(
+        _ type: Value.Type,
+        from invocation: ParsedInvocation
+    ) throws -> Value {
+        var value = Value()
+
+        try bind(
+            invocation,
+            into: &value
+        )
+
+        return value
     }
 
     private static func fields<Value>(
@@ -63,5 +85,16 @@ public enum ArgumentFieldCollector {
         }
 
         return result
+    }
+}
+
+public extension ParsedInvocation {
+    func bind<Value: ArgumentGroup>(
+        _ type: Value.Type = Value.self
+    ) throws -> Value {
+        try ArgumentFieldCollector.bind(
+            type,
+            from: self
+        )
     }
 }

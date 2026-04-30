@@ -27,10 +27,26 @@ public enum ArgumentApplicationComponent: Sendable {
 
 @resultBuilder
 public enum ArgumentApplicationBuilder {
-    public static func buildBlock(
-        _ components: ArgumentApplicationComponent...
+    public static func buildExpression(
+        _ component: ArgumentApplicationComponent
+    ) -> [ArgumentApplicationComponent] {
+        [
+            component,
+        ]
+    }
+
+    public static func buildExpression(
+        _ components: [ArgumentApplicationComponent]
     ) -> [ArgumentApplicationComponent] {
         components
+    }
+
+    public static func buildBlock(
+        _ components: [ArgumentApplicationComponent]...
+    ) -> [ArgumentApplicationComponent] {
+        components.flatMap {
+            $0
+        }
     }
 
     public static func buildArray(

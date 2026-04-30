@@ -39,6 +39,10 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         defaultValueFlow,
         decimalValueFlow,
 
+        builderErgonomicsFlow,
+        typedBindingConvenienceFlow,
+        argumentProgramFlow,
+
         ecCompatibilityFlow,
     ]
 }

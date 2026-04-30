@@ -141,3 +141,13 @@ public func params(
         params
     )
 }
+
+public func params<Value: ArgumentGroup>(
+    _ type: Value.Type
+) throws -> DynamicParams {
+    DynamicParams(
+        try ArgumentFieldCollector.params(
+            of: type
+        )
+    )
+}

@@ -13,6 +13,21 @@ public func command(
 }
 
 public func command(
+    _ first: String,
+    _ rest: String...,
+    use handler: @escaping ArgumentCommandHandler
+) -> ArgumentApplicationComponent {
+    .route(
+        .init(
+            path: [
+                first,
+            ] + rest,
+            handler: handler
+        )
+    )
+}
+
+public func command(
     _ path: [String],
     use handler: @escaping ArgumentCommandHandler
 ) -> ArgumentApplicationComponent {
