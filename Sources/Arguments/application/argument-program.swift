@@ -5,9 +5,9 @@ public enum ArgumentProgram {
         arguments: [String] = Array(
             CommandLine.arguments.dropFirst()
         ),
-        spec: @autoclosure () throws -> CommandSpec,
+        spec: @autoclosure @Sendable () throws -> CommandSpec,
         showsHelpForUnhandledCommand: Bool = true,
-        @ArgumentApplicationBuilder _ build: () -> [ArgumentApplicationComponent] = {
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
             []
         }
     ) async -> Never {
@@ -27,9 +27,9 @@ public enum ArgumentProgram {
         arguments: [String] = Array(
             CommandLine.arguments.dropFirst()
         ),
-        spec: @autoclosure () throws -> CommandSpec,
+        spec: @autoclosure @Sendable () throws -> CommandSpec,
         showsHelpForUnhandledCommand: Bool = true,
-        @ArgumentApplicationBuilder _ build: () -> [ArgumentApplicationComponent] = {
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
             []
         }
     ) async -> Int32 {
