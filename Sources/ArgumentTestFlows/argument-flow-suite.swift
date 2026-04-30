@@ -42,6 +42,7 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         builderErgonomicsFlow,
         typedBindingConvenienceFlow,
         argumentLifecycleFlow,
+        argumentParsedFlow,
         argumentProgramFlow,
 
         ecCompatibilityFlow,

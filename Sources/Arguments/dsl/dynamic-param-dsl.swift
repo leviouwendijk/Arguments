@@ -151,3 +151,13 @@ public func params<Value: ArgumentGroup>(
         )
     )
 }
+
+public func params<Value: ArgumentPayloadProviding>(
+    _ type: Value.Type
+) throws -> DynamicParams {
+    DynamicParams(
+        try ArgumentFieldCollector.params(
+            of: Value.ArgumentPayload.self
+        )
+    )
+}
