@@ -16,7 +16,20 @@ public struct AnyArgumentValueParser<Value: Sendable>: Sendable {
     }
 }
 
-public protocol ArgumentValue: Sendable {
+public protocol ArgumentBindingValue: Sendable {
+    static var argumentValueName: String { get }
+    static var argumentValueValidator: AnyArgumentValueValidator { get }
+
+    static func parseArgumentValue(
+        _ rawValue: String
+    ) throws -> Self
+
+    static func rawArgumentValue(
+        _ value: Self
+    ) -> String?
+}
+
+public protocol ArgumentValue: ArgumentBindingValue {
     static var parser: AnyArgumentValueParser<Self> { get }
     static var valueName: String { get }
 
@@ -26,12 +39,74 @@ public protocol ArgumentValue: Sendable {
 }
 
 public extension ArgumentValue {
+    static var argumentValueName: String {
+        valueName
+    }
+
+    static var argumentValueValidator: AnyArgumentValueValidator {
+        AnyArgumentValueValidator(
+            parser
+        )
+    }
+
+    static func parseArgumentValue(
+        _ rawValue: String
+    ) throws -> Self {
+        try parser.parse(
+            rawValue
+        )
+    }
+
+    static func rawArgumentValue(
+        _ value: Self
+    ) -> String? {
+        raw(
+            value
+        )
+    }
+
     static func raw(
         _ value: Self
     ) -> String {
         String(
             describing: value
         )
+    }
+}
+
+extension Optional: ArgumentBindingValue where Wrapped: ArgumentValue {
+    public static var argumentValueName: String {
+        Wrapped.valueName
+    }
+
+    public static var argumentValueValidator: AnyArgumentValueValidator {
+        AnyArgumentValueValidator(
+            Wrapped.parser
+        )
+    }
+
+    public static func parseArgumentValue(
+        _ rawValue: String
+    ) throws -> Optional<Wrapped> {
+        .some(
+            try Wrapped.parser.parse(
+                rawValue
+            )
+        )
+    }
+
+    public static func rawArgumentValue(
+        _ value: Optional<Wrapped>
+    ) -> String? {
+        switch value {
+        case .some(let wrapped):
+            Wrapped.raw(
+                wrapped
+            )
+
+        case .none:
+            nil
+        }
     }
 }
 
