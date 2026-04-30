@@ -251,55 +251,73 @@ private extension ArgumentFlowSuite {
 
                 try Expect.contains(
                     help,
-                    "agentic run",
-                    "help.command-path"
+                    "OVERVIEW: Run one prompt.",
+                    "help.overview"
                 )
 
                 try Expect.contains(
                     help,
-                    "usage:",
+                    "USAGE:",
                     "help.usage"
                 )
 
                 try Expect.contains(
                     help,
-                    "agentic run [prompt] [options]",
+                    "USAGE: agentic run [<options>] [<prompt>]",
                     "help.usage-line"
                 )
 
                 try Expect.contains(
                     help,
-                    "arguments:",
+                    "ARGUMENTS:",
                     "help.arguments"
                 )
 
                 try Expect.contains(
                     help,
-                    "[prompt]",
+                    "<prompt>                  Prompt to run.",
                     "help.prompt"
                 )
 
                 try Expect.contains(
                     help,
-                    "options:",
+                    "OPTIONS:",
                     "help.options"
                 )
 
                 try Expect.contains(
                     help,
-                    "-m, --model <string>",
+                    "-m, --model <model>       Model name.",
                     "help.model"
                 )
 
                 try Expect.contains(
                     help,
-                    "-s, --stream",
+                    "-s, --stream              Stream output.",
                     "help.stream"
                 )
 
                 try Expect.contains(
                     help,
-                    "examples:",
+                    "-h, --help                Show help information.",
+                    "help.help-option"
+                )
+
+                try Expect.contains(
+                    help,
+                    "DISCUSSION:",
+                    "help.discussion-heading"
+                )
+
+                try Expect.contains(
+                    help,
+                    "Runs one prompt through the selected backend.",
+                    "help.discussion"
+                )
+
+                try Expect.contains(
+                    help,
+                    "EXAMPLES:",
                     "help.examples"
                 )
 
@@ -307,6 +325,12 @@ private extension ArgumentFlowSuite {
                     help,
                     "agentic run \"write tests\"",
                     "help.example.text"
+                )
+
+                try Expect.contains(
+                    help,
+                    "Run a single prompt.",
+                    "help.example.description"
                 )
             }
 
@@ -329,32 +353,50 @@ private extension ArgumentFlowSuite {
 
                 try Expect.contains(
                     help,
-                    "agentic",
-                    "help.root.name"
+                    "OVERVIEW: Agentic runtime interface.",
+                    "help.root.overview"
                 )
 
                 try Expect.contains(
                     help,
-                    "agentic <command>",
+                    "USAGE: agentic <subcommand>",
                     "help.root.usage"
                 )
 
                 try Expect.contains(
                     help,
-                    "commands:",
+                    "OPTIONS:",
+                    "help.root.options"
+                )
+
+                try Expect.contains(
+                    help,
+                    "-h, --help                Show help information.",
+                    "help.root.help-option"
+                )
+
+                try Expect.contains(
+                    help,
+                    "SUBCOMMANDS:",
                     "help.root.commands"
                 )
 
                 try Expect.contains(
                     help,
-                    "run",
+                    "run                       Run one prompt.",
                     "help.root.run"
                 )
 
                 try Expect.contains(
                     help,
-                    "chat",
+                    "chat                      Start an interactive session.",
                     "help.root.chat"
+                )
+
+                try Expect.contains(
+                    help,
+                    "See 'agentic help <subcommand>' for detailed help.",
+                    "help.root.footer"
                 )
             }
 
@@ -381,14 +423,32 @@ private extension ArgumentFlowSuite {
 
                 try Expect.contains(
                     help,
-                    "-f, --format <string>",
+                    "USAGE: run [<options>]",
+                    "help.grouped.usage"
+                )
+
+                try Expect.contains(
+                    help,
+                    "OPTIONS:",
+                    "help.grouped.options"
+                )
+
+                try Expect.contains(
+                    help,
+                    "-f, --format <format>     Output format.",
                     "help.grouped.format"
                 )
 
                 try Expect.contains(
                     help,
-                    "--json",
+                    "--json                    Write JSON.",
                     "help.grouped.json"
+                )
+
+                try Expect.contains(
+                    help,
+                    "-h, --help                Show help information.",
+                    "help.grouped.help-option"
                 )
             }
         }

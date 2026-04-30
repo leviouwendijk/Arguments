@@ -104,6 +104,14 @@ private extension ArgumentApplication {
     func renderHelpIfRequested(
         _ arguments: [String]
     ) throws -> Bool {
+        if arguments.first == "help" {
+            try renderHelp(
+                for: Array(arguments.dropFirst())
+            )
+
+            return true
+        }
+
         guard arguments.contains("--help") || arguments.contains("-h") else {
             return false
         }
@@ -112,30 +120,40 @@ private extension ArgumentApplication {
             $0 != "--help" && $0 != "-h"
         }
 
-        let resolution = try? CommandResolver.resolve(
-            helpArguments,
-            root: spec
+        try renderHelp(
+            for: helpArguments
         )
 
-        if let resolution {
-            let parentPath = Array(
-                resolution.path.dropLast()
-            )
+        return true
+    }
 
-            print(
-                ArgumentHelpRenderer().render(
-                    command: resolution.command,
-                    path: parentPath
-                )
-            )
-        } else {
+    func renderHelp(
+        for arguments: [String]
+    ) throws {
+        guard !arguments.isEmpty else {
             print(
                 ArgumentHelpRenderer().render(
                     command: spec
                 )
             )
+
+            return
         }
 
-        return true
+        let resolution = try CommandResolver.resolve(
+            arguments,
+            root: spec
+        )
+
+        let parentPath = Array(
+            resolution.path.dropLast()
+        )
+
+        print(
+            ArgumentHelpRenderer().render(
+                command: resolution.command,
+                path: parentPath
+            )
+        )
     }
 }
