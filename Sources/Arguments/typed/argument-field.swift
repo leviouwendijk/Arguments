@@ -31,7 +31,7 @@ public struct Arg<Value: ArgumentValue>: ArgumentField {
             defaultValue
         )
         self.name = ParamName(name)
-        self.arity = .required
+        self.arity = .optional
         self.help = help
         self.defaultValue = defaultValue
     }
@@ -45,6 +45,7 @@ public struct Arg<Value: ArgumentValue>: ArgumentField {
                     parser: Value.parser
                 ),
                 arity: arity,
+                defaultValue: defaultValue.map(Value.raw),
                 help: help
             )
         )

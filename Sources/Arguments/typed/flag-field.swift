@@ -3,6 +3,7 @@ public struct Flag: ArgumentField {
     private let storage: ArgumentFieldStorage<Bool>
 
     private var name: ParamName
+    private var aliases: [ParamName]
     private var short: Character?
     private var defaultValue: Bool
     private var negation: FlagNegation
@@ -19,6 +20,8 @@ public struct Flag: ArgumentField {
 
     public init(
         _ name: String,
+        alias: String? = nil,
+        aliases: [String] = [],
         short: Character? = nil,
         default defaultValue: Bool = false,
         negation: FlagNegation = .automatic,
@@ -28,6 +31,9 @@ public struct Flag: ArgumentField {
             defaultValue
         )
         self.name = ParamName(name)
+        self.aliases = ([alias].compactMap { $0 } + aliases).map {
+            ParamName($0)
+        }
         self.short = short
         self.defaultValue = defaultValue
         self.negation = negation
@@ -38,6 +44,7 @@ public struct Flag: ArgumentField {
         .flag(
             .init(
                 name: name,
+                aliases: aliases,
                 short: short,
                 defaultValue: defaultValue,
                 negation: negation,

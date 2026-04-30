@@ -42,13 +42,13 @@ public enum CommandSpecNormalizer {
         var names: Set<ParamName> = []
 
         for param in params {
-            let name = param.name
+            for name in param.longNames {
+                guard !names.contains(name) else {
+                    throw ArgumentSpecError.duplicate_param(name)
+                }
 
-            guard !names.contains(name) else {
-                throw ArgumentSpecError.duplicate_param(name)
+                names.insert(name)
             }
-
-            names.insert(name)
         }
     }
 

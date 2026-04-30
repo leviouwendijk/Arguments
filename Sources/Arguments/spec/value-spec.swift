@@ -66,6 +66,11 @@ public enum RepeatMode: String, Sendable, Codable, Hashable, CaseIterable {
     case multiple
 }
 
+public enum OptionTake: String, Sendable, Codable, Hashable, CaseIterable {
+    case one
+    case many
+}
+
 public enum FlagNegation: String, Sendable, Codable, Hashable, CaseIterable {
     case none
     case automatic

@@ -33,18 +33,48 @@ public func arg<Value: ArgumentValue>(
     )
 }
 
+public func arg<Value: ArgumentValue>(
+    _ name: String,
+    as type: Value.Type = Value.self,
+    default defaultValue: Value,
+    help: String? = nil
+) -> DynamicParam {
+    DynamicParam(
+        .positional(
+            .init(
+                name: ParamName(name),
+                value: ValueSpec(
+                    name: Value.valueName,
+                    parser: Value.parser
+                ),
+                arity: .optional,
+                defaultValue: Value.raw(defaultValue),
+                help: help
+            )
+        )
+    )
+}
+
 public func opt<Value: ArgumentValue>(
     _ name: String,
+    alias: String? = nil,
+    aliases: [String] = [],
     short: Character? = nil,
     as type: Value.Type = Value.self,
     arity: ValueArity = .optional,
     repeatMode: RepeatMode = .single,
+    take: OptionTake = .one,
+    default defaultValue: Value? = nil,
     help: String? = nil
 ) -> DynamicParam {
     DynamicParam(
         .option(
             .init(
                 name: ParamName(name),
+                aliases: aliasNames(
+                    alias: alias,
+                    aliases: aliases
+                ),
                 short: short,
                 value: ValueSpec(
                     name: Value.valueName,
@@ -52,6 +82,8 @@ public func opt<Value: ArgumentValue>(
                 ),
                 arity: arity,
                 repeatMode: repeatMode,
+                take: take,
+                defaultValue: defaultValue.map(Value.raw),
                 help: help
             )
         )
@@ -60,14 +92,24 @@ public func opt<Value: ArgumentValue>(
 
 public func flag(
     _ name: String,
+    alias: String? = nil,
+    aliases: [String] = [],
     short: Character? = nil,
+    default defaultValue: Bool = false,
+    negation: FlagNegation = .automatic,
     help: String? = nil
 ) -> DynamicParam {
     DynamicParam(
         .flag(
             .init(
                 name: ParamName(name),
+                aliases: aliasNames(
+                    alias: alias,
+                    aliases: aliases
+                ),
                 short: short,
+                defaultValue: defaultValue,
+                negation: negation,
                 help: help
             )
         )
@@ -100,4 +142,13 @@ public func params(
     DynamicParams(
         params
     )
+}
+
+private func aliasNames(
+    alias: String?,
+    aliases: [String]
+) -> [ParamName] {
+    ([alias].compactMap { $0 } + aliases).map {
+        ParamName($0)
+    }
 }

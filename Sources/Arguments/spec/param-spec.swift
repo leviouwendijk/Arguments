@@ -9,48 +9,61 @@ public struct PositionalSpec: Sendable {
     public var name: ParamName
     public var value: ValueSpec
     public var arity: ValueArity
+    public var defaultValue: String?
     public var help: String?
 
     public init(
         name: ParamName,
         value: ValueSpec,
         arity: ValueArity = .required,
+        defaultValue: String? = nil,
         help: String? = nil
     ) {
         self.name = name
         self.value = value
         self.arity = arity
+        self.defaultValue = defaultValue
         self.help = help
     }
 }
 
 public struct OptionSpec: Sendable {
     public var name: ParamName
+    public var aliases: [ParamName]
     public var short: Character?
     public var value: ValueSpec
     public var arity: ValueArity
     public var repeatMode: RepeatMode
+    public var take: OptionTake
+    public var defaultValue: String?
     public var help: String?
 
     public init(
         name: ParamName,
+        aliases: [ParamName] = [],
         short: Character? = nil,
         value: ValueSpec,
         arity: ValueArity = .required,
         repeatMode: RepeatMode = .single,
+        take: OptionTake = .one,
+        defaultValue: String? = nil,
         help: String? = nil
     ) {
         self.name = name
+        self.aliases = aliases
         self.short = short
         self.value = value
         self.arity = arity
         self.repeatMode = repeatMode
+        self.take = take
+        self.defaultValue = defaultValue
         self.help = help
     }
 }
 
 public struct FlagSpec: Sendable {
     public var name: ParamName
+    public var aliases: [ParamName]
     public var short: Character?
     public var defaultValue: Bool
     public var negation: FlagNegation
@@ -58,12 +71,14 @@ public struct FlagSpec: Sendable {
 
     public init(
         name: ParamName,
+        aliases: [ParamName] = [],
         short: Character? = nil,
         defaultValue: Bool = false,
         negation: FlagNegation = .automatic,
         help: String? = nil
     ) {
         self.name = name
+        self.aliases = aliases
         self.short = short
         self.defaultValue = defaultValue
         self.negation = negation
@@ -113,6 +128,32 @@ public extension ParamSpec {
             spec.short
         case .group:
             nil
+        }
+    }
+
+    var longNames: [ParamName] {
+        switch self {
+        case .positional(let spec):
+            [
+                spec.name,
+            ]
+
+        case .option(let spec):
+            [
+                spec.name,
+            ] + spec.aliases
+
+        case .flag(let spec):
+            [
+                spec.name,
+            ] + spec.aliases
+
+        case .group(let spec):
+            [
+                ParamName(
+                    spec.name ?? "group"
+                ),
+            ]
         }
     }
 }

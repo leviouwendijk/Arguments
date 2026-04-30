@@ -63,6 +63,11 @@ public enum ArgumentParser {
             cursor.advance()
         }
 
+        try applyDefaults(
+            command: command,
+            invocation: &invocation
+        )
+
         try validateRequiredPositionals(
             positionals,
             invocation: invocation
@@ -74,6 +79,37 @@ public enum ArgumentParser {
         )
 
         return invocation
+    }
+
+    private static func applyDefaults(
+        command: CommandSpec,
+        invocation: inout ParsedInvocation
+    ) throws {
+        for positional in command.positionalParams() {
+            guard invocation.values[positional.name] == nil,
+                  let defaultValue = positional.defaultValue else {
+                continue
+            }
+
+            try appendPositionalValue(
+                defaultValue,
+                positional: positional,
+                invocation: &invocation
+            )
+        }
+
+        for option in command.optionParams() {
+            guard invocation.values[option.name] == nil,
+                  let defaultValue = option.defaultValue else {
+                continue
+            }
+
+            try appendOptionValue(
+                defaultValue,
+                option: option,
+                invocation: &invocation
+            )
+        }
     }
 
     private static func validateRequiredPositionals(
@@ -150,8 +186,8 @@ public enum ArgumentParser {
             valueSpec: option.value
         )
 
-        switch option.repeatMode {
-        case .single:
+        switch (option.repeatMode, option.take) {
+        case (.single, .one):
             guard invocation.values[option.name] == nil else {
                 throw ArgumentParseError.duplicate_value(
                     option.name
@@ -163,7 +199,8 @@ public enum ArgumentParser {
                 value,
             ]
 
-        case .multiple:
+        case (.single, .many),
+             (.multiple, _):
             invocation.repeatedValues[
                 option.name,
                 default: []
@@ -256,8 +293,29 @@ public enum ArgumentParser {
         if let option = command.option(named: body) {
             cursor.advance()
 
+            try consumeOptionValues(
+                original: raw,
+                cursor: &cursor,
+                option: option,
+                invocation: &invocation
+            )
+
+            return
+        }
+
+        throw ArgumentParseError.unknown_option(raw)
+    }
+
+    private static func consumeOptionValues(
+        original: String,
+        cursor: inout ArgvCursor,
+        option: OptionSpec,
+        invocation: inout ParsedInvocation
+    ) throws {
+        switch option.take {
+        case .one:
             guard let value = cursor.peek() else {
-                throw ArgumentParseError.missing_value(raw)
+                throw ArgumentParseError.missing_value(original)
             }
 
             try appendOptionValue(
@@ -267,10 +325,31 @@ public enum ArgumentParser {
             )
 
             cursor.advance()
-            return
-        }
 
-        throw ArgumentParseError.unknown_option(raw)
+        case .many:
+            var count = 0
+
+            while let value = cursor.peek(), !isOptionBoundary(value) {
+                try appendOptionValue(
+                    value,
+                    option: option,
+                    invocation: &invocation
+                )
+
+                count += 1
+                cursor.advance()
+            }
+
+            guard count > 0 else {
+                throw ArgumentParseError.missing_value(original)
+            }
+        }
+    }
+
+    private static func isOptionBoundary(
+        _ value: String
+    ) -> Bool {
+        value == "--" || value.hasPrefix("-")
     }
 
     private static func parseShortOption(
@@ -292,17 +371,13 @@ public enum ArgumentParser {
         if let option = command.option(short: short) {
             cursor.advance()
 
-            guard let value = cursor.peek() else {
-                throw ArgumentParseError.missing_value(raw)
-            }
-
-            try appendOptionValue(
-                value,
+            try consumeOptionValues(
+                original: raw,
+                cursor: &cursor,
                 option: option,
                 invocation: &invocation
             )
 
-            cursor.advance()
             return
         }
 
@@ -364,7 +439,7 @@ private extension CommandSpec {
     ) -> FlagSpec? {
         for param in params.flattenedParams {
             if case .flag(let flag) = param,
-               flag.name.rawValue == name {
+               flag.matches(long: name) {
                 return flag
             }
         }
@@ -390,7 +465,7 @@ private extension CommandSpec {
     ) -> OptionSpec? {
         for param in params.flattenedParams {
             if case .option(let option) = param,
-               option.name.rawValue == name {
+               option.matches(long: name) {
                 return option
             }
         }
@@ -409,5 +484,27 @@ private extension CommandSpec {
         }
 
         return nil
+    }
+}
+
+private extension OptionSpec {
+    func matches(
+        long name: String
+    ) -> Bool {
+        self.name.rawValue == name
+            || aliases.contains {
+                $0.rawValue == name
+            }
+    }
+}
+
+private extension FlagSpec {
+    func matches(
+        long name: String
+    ) -> Bool {
+        self.name.rawValue == name
+            || aliases.contains {
+                $0.rawValue == name
+            }
     }
 }

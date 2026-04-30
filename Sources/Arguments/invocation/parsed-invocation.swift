@@ -30,6 +30,33 @@ public struct ParsedInvocation: Sendable {
         return try Value.parser.parse(rawValue)
     }
 
+    public func value<Value: ArgumentValue>(
+        _ name: ParamName,
+        as type: Value.Type = Value.self,
+        default defaultValue: Value
+    ) throws -> Value {
+        try value(
+            name,
+            as: type
+        ) ?? defaultValue
+    }
+
+    public func require<Value: ArgumentValue>(
+        _ name: ParamName,
+        as type: Value.Type = Value.self
+    ) throws -> Value {
+        guard let value = try value(
+            name,
+            as: type
+        ) else {
+            throw ArgumentParseError.missing_required(
+                name
+            )
+        }
+
+        return value
+    }
+
     public func values<Value: ArgumentValue>(
         _ name: ParamName,
         as type: Value.Type = Value.self

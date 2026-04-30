@@ -19,6 +19,20 @@ public struct AnyArgumentValueParser<Value: Sendable>: Sendable {
 public protocol ArgumentValue: Sendable {
     static var parser: AnyArgumentValueParser<Self> { get }
     static var valueName: String { get }
+
+    static func raw(
+        _ value: Self
+    ) -> String
+}
+
+public extension ArgumentValue {
+    static func raw(
+        _ value: Self
+    ) -> String {
+        String(
+            describing: value
+        )
+    }
 }
 
 public enum ArgumentValueParseError: Error, LocalizedError, Sendable, Equatable {
@@ -129,7 +143,10 @@ extension Float: ArgumentValue {
 extension Decimal: ArgumentValue {
     public static var parser: AnyArgumentValueParser<Decimal> {
         .init { rawValue in
-            guard let value = Decimal(string: rawValue) else {
+            guard let value = Decimal(
+                string: rawValue,
+                locale: Locale(identifier: "en_US_POSIX")
+            ) else {
                 throw ArgumentValueParseError.invalid_value(
                     value: rawValue,
                     type: valueName
@@ -163,5 +180,11 @@ public extension ArgumentValue where Self: RawRepresentable, RawValue == String 
         String(
             describing: Self.self
         )
+    }
+
+    static func raw(
+        _ value: Self
+    ) -> String {
+        value.rawValue
     }
 }

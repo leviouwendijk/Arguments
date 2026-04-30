@@ -202,11 +202,11 @@ private extension ArgumentHelpRenderer {
     func optionNames(
         _ option: OptionSpec
     ) -> String {
-        if let short = option.short {
-            return "-\(short), --\(option.name.rawValue)"
-        }
-
-        return "--\(option.name.rawValue)"
+        names(
+            canonical: option.name,
+            aliases: option.aliases,
+            short: option.short
+        )
     }
 
     func flagRows(
@@ -223,21 +223,45 @@ private extension ArgumentHelpRenderer {
     func flagNames(
         _ flag: FlagSpec
     ) -> String {
-        let longName: String
+        let positive = names(
+            canonical: flag.name,
+            aliases: flag.aliases,
+            short: flag.short
+        )
 
         switch flag.negation {
         case .automatic:
-            longName = "--\(flag.name.rawValue), --no-\(flag.name.rawValue)"
+            let negative = ([flag.name] + flag.aliases).map {
+                "--no-\($0.rawValue)"
+            }
+
+            return ([positive] + negative).joined(
+                separator: ", "
+            )
 
         case .none:
-            longName = "--\(flag.name.rawValue)"
+            return positive
+        }
+    }
+
+    func names(
+        canonical: ParamName,
+        aliases: [ParamName],
+        short: Character?
+    ) -> String {
+        let longNames = ([canonical] + aliases).map {
+            "--\($0.rawValue)"
         }
 
-        if let short = flag.short {
-            return "-\(short), \(longName)"
+        if let short {
+            return (["-\(short)"] + longNames).joined(
+                separator: ", "
+            )
         }
 
-        return longName
+        return longNames.joined(
+            separator: ", "
+        )
     }
 
     func commandRows(

@@ -33,6 +33,12 @@ enum ArgumentFlowSuite: TestFlowRegistry {
         requiredOptionsFlow,
         parseTimeValueValidationFlow,
         repeatableOptionsFlow,
+        paramAliasFlow,
+        manyOptionFlow,
+        defaultValueFlow,
+        decimalValueFlow,
+
+        ecCompatibilityFlow,
     ]
 }
 
