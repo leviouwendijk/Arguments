@@ -75,3 +75,45 @@ public enum ArgumentProgram {
         )
     }
 }
+
+extension ArgumentProgram {
+    public static func main<Root: ArgumentCommand>(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        ),
+        command root: Root.Type,
+        showsHelpForUnhandledCommand: Bool = true,
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
+            []
+        }
+    ) async -> Never {
+        await main(
+            arguments: arguments,
+            spec: try root.spec(),
+            showsHelpForUnhandledCommand: showsHelpForUnhandledCommand
+        ) {
+            root.childApplicationComponents()
+            build()
+        }
+    }
+
+    public static func run<Root: ArgumentCommand>(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        ),
+        command root: Root.Type,
+        showsHelpForUnhandledCommand: Bool = true,
+        @ArgumentApplicationBuilder _ build: @Sendable () -> [ArgumentApplicationComponent] = {
+            []
+        }
+    ) async -> Int32 {
+        await run(
+            arguments: arguments,
+            spec: try root.spec(),
+            showsHelpForUnhandledCommand: showsHelpForUnhandledCommand
+        ) {
+            root.childApplicationComponents()
+            build()
+        }
+    }
+}
