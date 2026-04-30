@@ -3,12 +3,12 @@
   "failed_names" : [
 
   ],
-  "generated_at" : "2026-04-30T09:54:59Z",
-  "passed" : 37,
+  "generated_at" : "2026-04-30T11:22:02Z",
+  "passed" : 38,
   "results" : [
     {
       "display_name" : "command-metadata",
-      "duration_seconds" : 0.0025099515914916992,
+      "duration_seconds" : 0.0014029741287231445,
       "name" : "command-metadata",
       "status" : "passed",
       "tags" : [
@@ -19,7 +19,7 @@
     },
     {
       "display_name" : "dynamic-parameter-dsl",
-      "duration_seconds" : 0.0008100271224975586,
+      "duration_seconds" : 0.000946044921875,
       "name" : "dynamic-parameter-dsl",
       "status" : "passed",
       "tags" : [
@@ -30,7 +30,7 @@
     },
     {
       "display_name" : "parameter-groups",
-      "duration_seconds" : 0.0010709762573242188,
+      "duration_seconds" : 0.0009129047393798828,
       "name" : "parameter-groups",
       "status" : "passed",
       "tags" : [
@@ -43,7 +43,7 @@
     },
     {
       "display_name" : "help-rendering",
-      "duration_seconds" : 0.0012600421905517578,
+      "duration_seconds" : 0.0005990266799926758,
       "name" : "help-rendering",
       "status" : "passed",
       "tags" : [
@@ -54,7 +54,7 @@
     },
     {
       "display_name" : "argument-application",
-      "duration_seconds" : 0.0009349584579467773,
+      "duration_seconds" : 0.0004279613494873047,
       "name" : "argument-application",
       "status" : "passed",
       "tags" : [
@@ -65,7 +65,7 @@
     },
     {
       "display_name" : "duplicate-param-validation",
-      "duration_seconds" : 0.0005570650100708008,
+      "duration_seconds" : 0.0002390146255493164,
       "name" : "duplicate-param-validation",
       "status" : "passed",
       "tags" : [
@@ -75,7 +75,7 @@
     },
     {
       "display_name" : "duplicate-short-validation",
-      "duration_seconds" : 0.0004909038543701172,
+      "duration_seconds" : 0.00023508071899414062,
       "name" : "duplicate-short-validation",
       "status" : "passed",
       "tags" : [
@@ -85,7 +85,7 @@
     },
     {
       "display_name" : "duplicate-child-validation",
-      "duration_seconds" : 0.00026297569274902344,
+      "duration_seconds" : 0.00022101402282714844,
       "name" : "duplicate-child-validation",
       "status" : "passed",
       "tags" : [
@@ -96,7 +96,7 @@
     },
     {
       "display_name" : "primitive-value-parsers",
-      "duration_seconds" : 0.00025403499603271484,
+      "duration_seconds" : 0.0002390146255493164,
       "name" : "primitive-value-parsers",
       "status" : "passed",
       "tags" : [
@@ -106,7 +106,7 @@
     },
     {
       "display_name" : "property-wrapper-field-collection",
-      "duration_seconds" : 0.0006849765777587891,
+      "duration_seconds" : 0.0004140138626098633,
       "name" : "property-wrapper-field-collection",
       "status" : "passed",
       "tags" : [
@@ -117,7 +117,7 @@
     },
     {
       "display_name" : "property-wrapper-binding",
-      "duration_seconds" : 0.00037097930908203125,
+      "duration_seconds" : 0.000370025634765625,
       "name" : "property-wrapper-binding",
       "status" : "passed",
       "tags" : [
@@ -128,7 +128,7 @@
     },
     {
       "display_name" : "typed-groups",
-      "duration_seconds" : 0.0006129741668701172,
+      "duration_seconds" : 0.0010570287704467773,
       "name" : "typed-groups",
       "status" : "passed",
       "tags" : [
@@ -140,7 +140,7 @@
     },
     {
       "display_name" : "argv-cursor",
-      "duration_seconds" : 0.0001919269561767578,
+      "duration_seconds" : 0.0002149343490600586,
       "name" : "argv-cursor",
       "status" : "passed",
       "tags" : [
@@ -150,7 +150,7 @@
     },
     {
       "display_name" : "command-resolution",
-      "duration_seconds" : 0.00024402141571044922,
+      "duration_seconds" : 0.0004380941390991211,
       "name" : "command-resolution",
       "status" : "passed",
       "tags" : [
@@ -161,7 +161,7 @@
     },
     {
       "display_name" : "long-flag-parsing",
-      "duration_seconds" : 0.00023102760314941406,
+      "duration_seconds" : 0.00026404857635498047,
       "name" : "long-flag-parsing",
       "status" : "passed",
       "tags" : [
@@ -172,7 +172,7 @@
     },
     {
       "display_name" : "long-option-parsing",
-      "duration_seconds" : 0.0002529621124267578,
+      "duration_seconds" : 0.0002779960632324219,
       "name" : "long-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -183,7 +183,7 @@
     },
     {
       "display_name" : "short-option-parsing",
-      "duration_seconds" : 0.0002549886703491211,
+      "duration_seconds" : 0.0002950429916381836,
       "name" : "short-option-parsing",
       "status" : "passed",
       "tags" : [
@@ -195,7 +195,7 @@
     },
     {
       "display_name" : "positional-parsing",
-      "duration_seconds" : 0.0002930164337158203,
+      "duration_seconds" : 0.0003110170364379883,
       "name" : "positional-parsing",
       "status" : "passed",
       "tags" : [
@@ -206,7 +206,7 @@
     },
     {
       "display_name" : "required-positionals",
-      "duration_seconds" : 0.00033402442932128906,
+      "duration_seconds" : 0.00024497509002685547,
       "name" : "required-positionals",
       "status" : "passed",
       "tags" : [
@@ -218,7 +218,7 @@
     },
     {
       "display_name" : "optional-positionals",
-      "duration_seconds" : 0.00023996829986572266,
+      "duration_seconds" : 0.00029909610748291016,
       "name" : "optional-positionals",
       "status" : "passed",
       "tags" : [
@@ -230,7 +230,7 @@
     },
     {
       "display_name" : "variadic-positionals",
-      "duration_seconds" : 0.00033295154571533203,
+      "duration_seconds" : 0.0005209445953369141,
       "name" : "variadic-positionals",
       "status" : "passed",
       "tags" : [
@@ -242,7 +242,7 @@
     },
     {
       "display_name" : "terminator-passthrough",
-      "duration_seconds" : 0.0003720521926879883,
+      "duration_seconds" : 0.00025904178619384766,
       "name" : "terminator-passthrough",
       "status" : "passed",
       "tags" : [
@@ -253,7 +253,7 @@
     },
     {
       "display_name" : "integrated-parse",
-      "duration_seconds" : 0.00034999847412109375,
+      "duration_seconds" : 0.00028896331787109375,
       "name" : "integrated-parse",
       "status" : "passed",
       "tags" : [
@@ -264,7 +264,7 @@
     },
     {
       "display_name" : "unknown-command",
-      "duration_seconds" : 0.00026297569274902344,
+      "duration_seconds" : 0.0002579689025878906,
       "name" : "unknown-command",
       "status" : "passed",
       "tags" : [
@@ -276,7 +276,7 @@
     },
     {
       "display_name" : "default-child",
-      "duration_seconds" : 0.0003180503845214844,
+      "duration_seconds" : 0.0003249645233154297,
       "name" : "default-child",
       "status" : "passed",
       "tags" : [
@@ -287,7 +287,7 @@
     },
     {
       "display_name" : "flag-negation",
-      "duration_seconds" : 0.00025403499603271484,
+      "duration_seconds" : 0.00027000904083251953,
       "name" : "flag-negation",
       "status" : "passed",
       "tags" : [
@@ -298,7 +298,7 @@
     },
     {
       "display_name" : "required-options",
-      "duration_seconds" : 0.00024306774139404297,
+      "duration_seconds" : 0.0003609657287597656,
       "name" : "required-options",
       "status" : "passed",
       "tags" : [
@@ -310,7 +310,7 @@
     },
     {
       "display_name" : "parse-time-value-validation",
-      "duration_seconds" : 0.00028705596923828125,
+      "duration_seconds" : 0.0003279447555541992,
       "name" : "parse-time-value-validation",
       "status" : "passed",
       "tags" : [
@@ -322,7 +322,7 @@
     },
     {
       "display_name" : "repeatable-options",
-      "duration_seconds" : 0.0002980232238769531,
+      "duration_seconds" : 0.0003349781036376953,
       "name" : "repeatable-options",
       "status" : "passed",
       "tags" : [
@@ -333,7 +333,7 @@
     },
     {
       "display_name" : "param-aliases",
-      "duration_seconds" : 0.00046706199645996094,
+      "duration_seconds" : 0.0003110170364379883,
       "name" : "param-aliases",
       "status" : "passed",
       "tags" : [
@@ -344,7 +344,7 @@
     },
     {
       "display_name" : "many-options",
-      "duration_seconds" : 0.0005369186401367188,
+      "duration_seconds" : 0.00033605098724365234,
       "name" : "many-options",
       "status" : "passed",
       "tags" : [
@@ -355,7 +355,7 @@
     },
     {
       "display_name" : "default-values",
-      "duration_seconds" : 0.0003720521926879883,
+      "duration_seconds" : 0.00041103363037109375,
       "name" : "default-values",
       "status" : "passed",
       "tags" : [
@@ -366,7 +366,7 @@
     },
     {
       "display_name" : "decimal-values",
-      "duration_seconds" : 0.0005080699920654297,
+      "duration_seconds" : 0.0008590221405029297,
       "name" : "decimal-values",
       "status" : "passed",
       "tags" : [
@@ -377,7 +377,7 @@
     },
     {
       "display_name" : "builder-ergonomics",
-      "duration_seconds" : 0.0006600618362426758,
+      "duration_seconds" : 0.0004609823226928711,
       "name" : "builder-ergonomics",
       "status" : "passed",
       "tags" : [
@@ -389,7 +389,7 @@
     },
     {
       "display_name" : "typed-binding-convenience",
-      "duration_seconds" : 0.00031304359436035156,
+      "duration_seconds" : 0.0004050731658935547,
       "name" : "typed-binding-convenience",
       "status" : "passed",
       "tags" : [
@@ -400,8 +400,22 @@
       ]
     },
     {
+      "display_name" : "argument-lifecycle",
+      "duration_seconds" : 0.0006759166717529297,
+      "name" : "argument-lifecycle",
+      "status" : "passed",
+      "tags" : [
+        "binding",
+        "context",
+        "normalize",
+        "resolve",
+        "typed",
+        "validate"
+      ]
+    },
+    {
       "display_name" : "argument-program",
-      "duration_seconds" : 0.00038492679595947266,
+      "duration_seconds" : 0.00055694580078125,
       "name" : "argument-program",
       "status" : "passed",
       "tags" : [
@@ -413,7 +427,7 @@
     },
     {
       "display_name" : "ec-compatibility",
-      "duration_seconds" : 0.0013860464096069336,
+      "duration_seconds" : 0.0012919902801513672,
       "name" : "ec-compatibility",
       "status" : "passed",
       "tags" : [
@@ -425,5 +439,5 @@
   ],
   "skipped" : 0,
   "title" : "Arguments flow tests",
-  "total" : 37
+  "total" : 38
 }

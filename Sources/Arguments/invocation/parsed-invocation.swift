@@ -27,7 +27,9 @@ public struct ParsedInvocation: Sendable {
             return nil
         }
 
-        return try Value.parser.parse(rawValue)
+        return try Value.parser.parse(
+            rawValue
+        )
     }
 
     public func value<Value: ArgumentValue>(
@@ -62,7 +64,9 @@ public struct ParsedInvocation: Sendable {
         as type: Value.Type = Value.self
     ) throws -> [Value] {
         try (repeatedValues[name] ?? []).map {
-            try Value.parser.parse($0)
+            try Value.parser.parse(
+                $0
+            )
         }
     }
 
@@ -71,50 +75,5 @@ public struct ParsedInvocation: Sendable {
         default defaultValue: Bool = false
     ) throws -> Bool {
         flags[name] ?? defaultValue
-    }
-}
-
-public extension ParsedInvocation {
-    func bindNormalized<Value>(
-        _ type: Value.Type = Value.self
-    ) throws -> Value
-    where
-        Value: ArgumentGroup & ArgumentNormalizable
-    {
-        var value = try bind(
-            type
-        )
-
-        try value.normalize()
-
-        return value
-    }
-
-    func bindValidated<Value>(
-        _ type: Value.Type = Value.self
-    ) throws -> Value
-    where
-        Value: ArgumentGroup & ArgumentValidatable
-    {
-        let value = try bind(
-            type
-        )
-
-        try value.validate()
-
-        return value
-    }
-
-    func bindResolved<Value>(
-        _ type: Value.Type = Value.self
-    ) throws -> Value.ResolvedArgumentValue
-    where
-        Value: ArgumentGroup & ArgumentResolvable
-    {
-        let value = try bind(
-            type
-        )
-
-        return try value.resolve()
     }
 }
