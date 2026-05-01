@@ -194,6 +194,15 @@ public extension ArgumentCommand {
         )
     }
 
+    static func main(
+        errorHandler: @escaping ArgumentProgramErrorHandler
+    ) async {
+        await ArgumentProgram.main(
+            command: Self.self,
+            errorHandler: errorHandler
+        )
+    }
+
     static func run(
         arguments: [String] = Array(
             CommandLine.arguments.dropFirst()
@@ -202,6 +211,19 @@ public extension ArgumentCommand {
         await ArgumentProgram.run(
             arguments: arguments,
             command: Self.self
+        )
+    }
+
+    static func run(
+        arguments: [String] = Array(
+            CommandLine.arguments.dropFirst()
+        ),
+        errorHandler: @escaping ArgumentProgramErrorHandler
+    ) async -> Int32 {
+        await ArgumentProgram.run(
+            arguments: arguments,
+            command: Self.self,
+            errorHandler: errorHandler
         )
     }
 }
