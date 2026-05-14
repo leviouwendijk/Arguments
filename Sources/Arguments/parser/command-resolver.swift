@@ -107,8 +107,17 @@ public enum CommandResolver {
         _ rawValue: String,
         command: CommandSpec
     ) -> Bool {
-        command.defaultChild != nil
-            && !rawValue.hasPrefix("-")
+        guard command.defaultChild != nil else {
+            return false
+        }
+
+        guard rawValue.hasPrefix("-") else {
+            return true
+        }
+
+        return !command.ownsOptionLikeToken(
+            rawValue
+        )
     }
 
     private static func defaultChild(
@@ -145,5 +154,95 @@ public enum CommandResolver {
             || command.aliases.contains {
                 $0.rawValue == rawValue
             }
+    }
+}
+
+private extension CommandSpec {
+    func ownsOptionLikeToken(
+        _ rawValue: String
+    ) -> Bool {
+        if rawValue == "--" {
+            return true
+        }
+
+        if rawValue.hasPrefix("--") {
+            let name = String(
+                rawValue
+                    .dropFirst(2)
+                    .split(separator: "=", maxSplits: 1)
+                    .first ?? ""
+            )
+
+            return ownsLongOptionOrFlag(
+                name
+            )
+        }
+
+        if rawValue.hasPrefix("-"),
+           rawValue.count >= 2 {
+            let shortText = String(
+                rawValue.dropFirst()
+            )
+
+            guard let first = shortText.first else {
+                return false
+            }
+
+            return ownsShortOptionOrFlag(
+                first
+            )
+        }
+
+        return false
+    }
+
+    func ownsLongOptionOrFlag(
+        _ name: String
+    ) -> Bool {
+        for param in params.flattenedParams {
+            switch param {
+            case .option(let option):
+                if option.name.rawValue == name ||
+                    option.aliases.contains(where: { $0.rawValue == name }) {
+                    return true
+                }
+
+            case .flag(let flag):
+                if flag.name.rawValue == name ||
+                    flag.aliases.contains(where: { $0.rawValue == name }) {
+                    return true
+                }
+
+            case .positional,
+                 .group:
+                continue
+            }
+        }
+
+        return false
+    }
+
+    func ownsShortOptionOrFlag(
+        _ short: Character
+    ) -> Bool {
+        for param in params.flattenedParams {
+            switch param {
+            case .option(let option):
+                if option.short == short {
+                    return true
+                }
+
+            case .flag(let flag):
+                if flag.short == short {
+                    return true
+                }
+
+            case .positional,
+                 .group:
+                continue
+            }
+        }
+
+        return false
     }
 }

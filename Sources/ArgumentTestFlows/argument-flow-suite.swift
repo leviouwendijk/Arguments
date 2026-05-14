@@ -1516,8 +1516,83 @@ private extension ArgumentFlowSuite {
                     }
                 }
             }
+
+            Step("resolve default child before child-owned flag") {
+                let spec = try cmd("agentic") {
+                    defaultChild("run")
+
+                    try cmd("run") {
+                        flag(
+                            "json",
+                            short: "j"
+                        )
+                    }
+                }
+
+                let invocation = try Arguments.parse(
+                    [
+                        "agentic",
+                        "--json",
+                    ],
+                    spec: spec
+                )
+
+                try Expect.equal(
+                    invocation.commandPath.map(\.rawValue),
+                    [
+                        "agentic",
+                        "run",
+                    ],
+                    "default-child.flag.commandPath"
+                )
+
+                try Expect.true(
+                    try invocation.flag("json"),
+                    "default-child.flag.value"
+                )
+            }
+
+            Step("parent-owned flag prevents default child descent") {
+                let spec = try cmd("agentic") {
+                    flag(
+                        "verbose",
+                        short: "v"
+                    )
+
+                    defaultChild("run")
+
+                    try cmd("run") {
+                        flag(
+                            "json",
+                            short: "j"
+                        )
+                    }
+                }
+
+                let invocation = try Arguments.parse(
+                    [
+                        "agentic",
+                        "--verbose",
+                    ],
+                    spec: spec
+                )
+
+                try Expect.equal(
+                    invocation.commandPath.map(\.rawValue),
+                    [
+                        "agentic"
+                    ],
+                    "default-child.parent-flag.commandPath"
+                )
+
+                try Expect.true(
+                    try invocation.flag("verbose"),
+                    "default-child.parent-flag.value"
+                )
+            }
         }
     }
+
     static var unknownCommandFlow: TestFlow {
         TestFlow(
             "unknown-command",
