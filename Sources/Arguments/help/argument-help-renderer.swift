@@ -333,10 +333,17 @@ private extension ArgumentHelpRenderer {
     ) -> [HelpRow] {
         command.children.map { child in
             HelpRow(
-                child.name.rawValue,
+                commandNames(child),
                 child.abstract
             )
         }
+    }
+
+    func commandNames(
+        _ command: CommandSpec
+    ) -> String {
+        ([command.name.rawValue] + command.aliases.map(\.rawValue))
+            .joined(separator: ", ")
     }
 
     func subcommandFooter(

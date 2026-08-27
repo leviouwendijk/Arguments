@@ -27,6 +27,7 @@ extension ArgumentFlowSuite {
                     spec.children[0].aliases.map(\.rawValue),
                     [
                         "r",
+                        "execute",
                     ],
                     "argument-command-alias.child"
                 )
@@ -54,6 +55,18 @@ extension ArgumentFlowSuite {
                 try Expect.true(
                     try invocation.flag("json"),
                     "argument-command-alias.flag"
+                )
+            }
+
+            Step("command aliases render in help") {
+                let help = ArgumentHelpRenderer().render(
+                    command: try AliasRootCommandFixture.spec()
+                )
+
+                try Expect.contains(
+                    help,
+                    "run, r, execute",
+                    "argument-command-alias.help"
                 )
             }
 
@@ -93,6 +106,7 @@ private enum AliasRunCommandFixture: RunnableArgumentCommand {
     static let name = "run"
     static let aliases = [
         "r",
+        "execute",
     ]
 
     static func components() throws -> [CommandComponentLowerable] {
