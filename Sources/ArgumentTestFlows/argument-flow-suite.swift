@@ -1,62 +1,63 @@
 import Arguments
-import TestFlows
+import Testing
 
-enum ArgumentFlowSuite: TestFlowRegistry {
-    static let title = "Arguments flow tests"
+enum ArgumentTestSuite {
+    static let suite = TestSuite(
+        "arguments",
+        title: "Arguments tests"
+    ) {
+        commandMetadataFlow
+        dynamicParameterDSLFlow
+        parameterGroupFlow
+        helpRenderingFlow
+        argumentApplicationFlow
+        duplicateParamValidationFlow
+        duplicateShortValidationFlow
+        duplicateChildValidationFlow
+        primitiveValueParserFlow
+        propertyWrapperFieldCollectionFlow
+        propertyWrapperBindingFlow
+        typedGroupFlow
+        argvCursorFlow
+        commandResolutionFlow
+        longFlagParsingFlow
+        longOptionParsingFlow
+        shortOptionParsingFlow
+        positionalParsingFlow
+        requiredPositionalsFlow
+        optionalPositionalsFlow
+        variadicPositionalsFlow
+        terminatorPassthroughFlow
+        integratedParseFlow
+        unknownCommandFlow
+        defaultChildFlow
+        flagNegationFlow
+        requiredOptionsFlow
+        parseTimeValueValidationFlow
+        repeatableOptionsFlow
+        paramAliasFlow
+        manyOptionFlow
+        defaultValueFlow
+        decimalValueFlow
 
-    static let flows: [TestFlow] = [
-        commandMetadataFlow,
-        dynamicParameterDSLFlow,
-        parameterGroupFlow,
-        helpRenderingFlow,
-        argumentApplicationFlow,
-        duplicateParamValidationFlow,
-        duplicateShortValidationFlow,
-        duplicateChildValidationFlow,
-        primitiveValueParserFlow,
-        propertyWrapperFieldCollectionFlow,
-        propertyWrapperBindingFlow,
-        typedGroupFlow,
-        argvCursorFlow,
-        commandResolutionFlow,
-        longFlagParsingFlow,
-        longOptionParsingFlow,
-        shortOptionParsingFlow,
-        positionalParsingFlow,
-        requiredPositionalsFlow,
-        optionalPositionalsFlow,
-        variadicPositionalsFlow,
-        terminatorPassthroughFlow,
-        integratedParseFlow,
-        unknownCommandFlow,
-        defaultChildFlow,
-        flagNegationFlow,
-        requiredOptionsFlow,
-        parseTimeValueValidationFlow,
-        repeatableOptionsFlow,
-        paramAliasFlow,
-        manyOptionFlow,
-        defaultValueFlow,
-        decimalValueFlow,
+        builderErgonomicsFlow
+        typedBindingConvenienceFlow
+        argumentLifecycleFlow
+        argumentParsedFlow
+        argumentProgramFlow
+        argumentCommandAliasFlow
 
-        builderErgonomicsFlow,
-        typedBindingConvenienceFlow,
-        argumentLifecycleFlow,
-        argumentParsedFlow,
-        argumentProgramFlow,
-        argumentCommandAliasFlow,
-
-        ecCompatibilityFlow,
-    ]
+        ecCompatibilityFlow
+    }
 }
 
-private extension ArgumentFlowSuite {
-    static var argumentApplicationFlow: TestFlow {
-        TestFlow(
+private extension ArgumentTestSuite {
+    static var argumentApplicationFlow: TestSuite {
+        TestSuite(
             "argument-application",
             tags: ["application", "dispatch", "commands"]
         ) {
-            Step("run default command for root invocation") {
+            Test("run default command for root invocation") {
                 let spec = try cmd("agentic") {
                     try cmd("tui") {
                         flag("json")
@@ -103,7 +104,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("run routed child command") {
+            Test("run routed child command") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         arg(
@@ -144,7 +145,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("run routed child command with explicit root name") {
+            Test("run routed child command with explicit root name") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("stream")
@@ -181,7 +182,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("unhandled command can throw") {
+            Test("unhandled command can throw") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("stream")
@@ -203,12 +204,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var helpRenderingFlow: TestFlow {
-        TestFlow(
+    static var helpRenderingFlow: TestSuite {
+        TestSuite(
             "help-rendering",
             tags: ["help", "renderer", "metadata"]
         ) {
-            Step("render command usage, params, and examples") {
+            Test("render command usage, params, and examples") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         about("Run one prompt.")
@@ -334,7 +335,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("render root command list") {
+            Test("render root command list") {
                 let spec = try cmd("agentic") {
                     about("Agentic runtime interface.")
 
@@ -400,7 +401,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("render grouped params as normal options") {
+            Test("render grouped params as normal options") {
                 let spec = try cmd("run") {
                     try group("output") {
                         opt(
@@ -453,12 +454,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var propertyWrapperBindingFlow: TestFlow {
-        TestFlow(
+    static var propertyWrapperBindingFlow: TestSuite {
+        TestSuite(
             "property-wrapper-binding",
             tags: ["typed", "wrappers", "binding"]
         ) {
-            Step("bind parsed invocation into property-wrapper fields") {
+            Test("bind parsed invocation into property-wrapper fields") {
                 var fixture = WrapperFixture()
 
                 let spec = try cmd("run") {
@@ -502,7 +503,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing values preserve wrapper defaults") {
+            Test("missing values preserve wrapper defaults") {
                 var fixture = WrapperFixture()
 
                 let spec = try cmd("run") {
@@ -543,12 +544,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var parameterGroupFlow: TestFlow {
-        TestFlow(
+    static var parameterGroupFlow: TestSuite {
+        TestSuite(
             "parameter-groups",
             tags: ["spec", "dsl", "params", "groups", "parser"]
         ) {
-            Step("group DSL preserves group in top-level params") {
+            Test("group DSL preserves group in top-level params") {
                 let spec = try cmd("run") {
                     try group("output") {
                         opt(
@@ -588,7 +589,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parser sees option inside group") {
+            Test("parser sees option inside group") {
                 let spec = try cmd("run") {
                     try group("output") {
                         opt(
@@ -617,7 +618,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parser sees short option inside group") {
+            Test("parser sees short option inside group") {
                 let spec = try cmd("run") {
                     try group("output") {
                         opt(
@@ -646,7 +647,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parser sees flag inside group") {
+            Test("parser sees flag inside group") {
                 let spec = try cmd("run") {
                     try group("output") {
                         flag("json")
@@ -666,7 +667,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parser sees positional inside group") {
+            Test("parser sees positional inside group") {
                 let spec = try cmd("run") {
                     try group("input") {
                         arg(
@@ -693,7 +694,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("normalizer rejects duplicate name across group boundary") {
+            Test("normalizer rejects duplicate name across group boundary") {
                 try Expect.throwsError("parameter-groups.duplicate-name") {
                     _ = try cmd("run") {
                         opt(
@@ -711,7 +712,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("normalizer rejects duplicate short across group boundary") {
+            Test("normalizer rejects duplicate short across group boundary") {
                 try Expect.throwsError("parameter-groups.duplicate-short") {
                     _ = try cmd("run") {
                         opt(
@@ -730,7 +731,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("nested groups parse") {
+            Test("nested groups parse") {
                 let spec = try cmd("run") {
                     try group("outer") {
                         try group("inner") {
@@ -753,12 +754,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var variadicPositionalsFlow: TestFlow {
-        TestFlow(
+    static var variadicPositionalsFlow: TestSuite {
+        TestSuite(
             "variadic-positionals",
             tags: ["argv", "parser", "positionals", "validation"]
         ) {
-            Step("missing variadic positional does not throw") {
+            Test("missing variadic positional does not throw") {
                 let spec = try cmd("run") {
                     arg(
                         "paths",
@@ -790,7 +791,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("variadic positional captures multiple values") {
+            Test("variadic positional captures multiple values") {
                 let spec = try cmd("run") {
                     arg(
                         "paths",
@@ -831,7 +832,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("required positional before variadic parses") {
+            Test("required positional before variadic parses") {
                 let spec = try cmd("copy") {
                     arg(
                         "mode",
@@ -876,7 +877,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("variadic positional can interleave with options") {
+            Test("variadic positional can interleave with options") {
                 let spec = try cmd("run") {
                     opt(
                         "format",
@@ -933,7 +934,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("variadic positional must be last positional") {
+            Test("variadic positional must be last positional") {
                 try Expect.throwsError("variadic-positionals.not-last") {
                     _ = try cmd("run") {
                         arg(
@@ -950,7 +951,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("invalid variadic value throws during parse") {
+            Test("invalid variadic value throws during parse") {
                 let spec = try cmd("run") {
                     arg(
                         "ids",
@@ -973,12 +974,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var parseTimeValueValidationFlow: TestFlow {
-        TestFlow(
+    static var parseTimeValueValidationFlow: TestSuite {
+        TestSuite(
             "parse-time-value-validation",
             tags: ["argv", "parser", "values", "validation"]
         ) {
-            Step("invalid option value throws during parse") {
+            Test("invalid option value throws during parse") {
                 let spec = try cmd("run") {
                     opt(
                         "count",
@@ -997,7 +998,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("invalid equals option value throws during parse") {
+            Test("invalid equals option value throws during parse") {
                 let spec = try cmd("run") {
                     opt(
                         "count",
@@ -1015,7 +1016,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("invalid positional value throws during parse") {
+            Test("invalid positional value throws during parse") {
                 let spec = try cmd("run") {
                     arg(
                         "count",
@@ -1033,7 +1034,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("valid typed values parse during parse") {
+            Test("valid typed values parse during parse") {
                 let spec = try cmd("run") {
                     arg(
                         "count",
@@ -1076,12 +1077,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var repeatableOptionsFlow: TestFlow {
-        TestFlow(
+    static var repeatableOptionsFlow: TestSuite {
+        TestSuite(
             "repeatable-options",
             tags: ["argv", "parser", "options"]
         ) {
-            Step("repeatable option preserves all values") {
+            Test("repeatable option preserves all values") {
                 let spec = try cmd("run") {
                     opt(
                         "stop",
@@ -1122,7 +1123,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("repeatable option supports equals syntax") {
+            Test("repeatable option supports equals syntax") {
                 let spec = try cmd("run") {
                     opt(
                         "stop",
@@ -1152,7 +1153,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("single option accepts one value") {
+            Test("single option accepts one value") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1189,7 +1190,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("single option duplicate throws") {
+            Test("single option duplicate throws") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1210,7 +1211,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("single option duplicate equals throws") {
+            Test("single option duplicate equals throws") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1231,12 +1232,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var requiredOptionsFlow: TestFlow {
-        TestFlow(
+    static var requiredOptionsFlow: TestSuite {
+        TestSuite(
             "required-options",
             tags: ["argv", "parser", "options", "validation"]
         ) {
-            Step("missing required option throws") {
+            Test("missing required option throws") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1253,7 +1254,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("present required option does not throw") {
+            Test("present required option does not throw") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1280,7 +1281,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing optional option does not throw") {
+            Test("missing optional option does not throw") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -1303,12 +1304,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var flagNegationFlow: TestFlow {
-        TestFlow(
+    static var flagNegationFlow: TestSuite {
+        TestSuite(
             "flag-negation",
             tags: ["argv", "parser", "flags"]
         ) {
-            Step("parse automatic flag negation") {
+            Test("parse automatic flag negation") {
                 let spec = try cmd("run") {
                     flag(
                         "stream",
@@ -1332,7 +1333,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("positive flag overrides default false") {
+            Test("positive flag overrides default false") {
                 let spec = try cmd("run") {
                     flag("stream")
                 }
@@ -1350,7 +1351,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("last flag value wins") {
+            Test("last flag value wins") {
                 let spec = try cmd("run") {
                     flag("stream")
                 }
@@ -1372,7 +1373,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("flag with disabled negation rejects no-prefix") {
+            Test("flag with disabled negation rejects no-prefix") {
                 let spec = try cmd("run") {
                     DynamicParam(
                         .flag(
@@ -1396,12 +1397,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var defaultChildFlow: TestFlow {
-        TestFlow(
+    static var defaultChildFlow: TestSuite {
+        TestSuite(
             "default-child",
             tags: ["argv", "parser", "commands"]
         ) {
-            Step("resolve default child at end of argv") {
+            Test("resolve default child at end of argv") {
                 let spec = try cmd("agentic") {
                     defaultChild("run")
 
@@ -1426,7 +1427,7 @@ private extension ArgumentFlowSuite {
                     "default-child.eof.commandPath"
                 )
             }
-            Step("resolve default child without consuming argv") {
+            Test("resolve default child without consuming argv") {
                 let spec = try cmd("agentic") {
                     defaultChild("run")
 
@@ -1465,7 +1466,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("explicit child still wins over default child") {
+            Test("explicit child still wins over default child") {
                 let spec = try cmd("agentic") {
                     defaultChild("run")
 
@@ -1505,7 +1506,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing configured default child throws") {
+            Test("missing configured default child throws") {
                 try Expect.throwsError("missing-default-child") {
                     _ = try cmd("agentic") {
                         defaultChild("run")
@@ -1517,7 +1518,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("resolve default child before child-owned flag") {
+            Test("resolve default child before child-owned flag") {
                 let spec = try cmd("agentic") {
                     defaultChild("run")
 
@@ -1552,7 +1553,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parent-owned flag prevents default child descent") {
+            Test("parent-owned flag prevents default child descent") {
                 let spec = try cmd("agentic") {
                     flag(
                         "verbose",
@@ -1593,12 +1594,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var unknownCommandFlow: TestFlow {
-        TestFlow(
+    static var unknownCommandFlow: TestSuite {
+        TestSuite(
             "unknown-command",
             tags: ["argv", "parser", "commands", "diagnostics"]
         ) {
-            Step("unknown child command throws") {
+            Test("unknown child command throws") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("stream")
@@ -1620,7 +1621,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("root positional is still allowed when root has no children") {
+            Test("root positional is still allowed when root has no children") {
                 let spec = try cmd("echo") {
                     arg(
                         "message",
@@ -1647,12 +1648,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var integratedParseFlow: TestFlow {
-        TestFlow(
+    static var integratedParseFlow: TestSuite {
+        TestSuite(
             "integrated-parse",
             tags: ["argv", "parser", "commands"]
         ) {
-            Step("resolve command and parse remaining argv") {
+            Test("resolve command and parse remaining argv") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         arg(
@@ -1719,12 +1720,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var terminatorPassthroughFlow: TestFlow {
-        TestFlow(
+    static var terminatorPassthroughFlow: TestSuite {
+        TestSuite(
             "terminator-passthrough",
             tags: ["argv", "parser", "passthrough"]
         ) {
-            Step("capture argv after terminator") {
+            Test("capture argv after terminator") {
                 let spec = try cmd("run") {
                     flag("stream")
                 }
@@ -1754,7 +1755,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("passthrough does not satisfy required positional") {
+            Test("passthrough does not satisfy required positional") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1774,12 +1775,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var optionalPositionalsFlow: TestFlow {
-        TestFlow(
+    static var optionalPositionalsFlow: TestSuite {
+        TestSuite(
             "optional-positionals",
             tags: ["argv", "parser", "positionals", "validation"]
         ) {
-            Step("missing optional positional does not throw") {
+            Test("missing optional positional does not throw") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1802,7 +1803,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("present optional positional parses") {
+            Test("present optional positional parses") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1828,7 +1829,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("required after optional still validates independently") {
+            Test("required after optional still validates independently") {
                 let spec = try cmd("run") {
                     arg(
                         "optional",
@@ -1851,12 +1852,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var requiredPositionalsFlow: TestFlow {
-        TestFlow(
+    static var requiredPositionalsFlow: TestSuite {
+        TestSuite(
             "required-positionals",
             tags: ["argv", "parser", "positionals", "validation"]
         ) {
-            Step("missing required positional throws") {
+            Test("missing required positional throws") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1872,7 +1873,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("present required positional does not throw") {
+            Test("present required positional does not throw") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1891,12 +1892,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var positionalParsingFlow: TestFlow {
-        TestFlow(
+    static var positionalParsingFlow: TestSuite {
+        TestSuite(
             "positional-parsing",
             tags: ["argv", "parser", "positionals"]
         ) {
-            Step("parse positional in declaration order") {
+            Test("parse positional in declaration order") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1936,7 +1937,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse options and positionals together") {
+            Test("parse options and positionals together") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -1989,7 +1990,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("unexpected positional throws") {
+            Test("unexpected positional throws") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -2009,12 +2010,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var shortOptionParsingFlow: TestFlow {
-        TestFlow(
+    static var shortOptionParsingFlow: TestSuite {
+        TestSuite(
             "short-option-parsing",
             tags: ["argv", "parser", "options", "flags"]
         ) {
-            Step("parse short flag") {
+            Test("parse short flag") {
                 let spec = try cmd("run") {
                     flag(
                         "stream",
@@ -2035,7 +2036,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse short option with following value") {
+            Test("parse short option with following value") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -2062,7 +2063,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing short option value throws") {
+            Test("missing short option value throws") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -2081,7 +2082,7 @@ private extension ArgumentFlowSuite {
                 }
             }
 
-            Step("unknown short option throws") {
+            Test("unknown short option throws") {
                 let spec = try cmd("run") {
                     flag(
                         "stream",
@@ -2100,12 +2101,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var longOptionParsingFlow: TestFlow {
-        TestFlow(
+    static var longOptionParsingFlow: TestSuite {
+        TestSuite(
             "long-option-parsing",
             tags: ["argv", "parser", "options"]
         ) {
-            Step("parse long option with following value") {
+            Test("parse long option with following value") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -2131,7 +2132,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse long option with equals value") {
+            Test("parse long option with equals value") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -2156,7 +2157,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing long option value throws") {
+            Test("missing long option value throws") {
                 let spec = try cmd("run") {
                     opt(
                         "model",
@@ -2175,12 +2176,12 @@ private extension ArgumentFlowSuite {
             }
         }
     }
-    static var longFlagParsingFlow: TestFlow {
-        TestFlow(
+    static var longFlagParsingFlow: TestSuite {
+        TestSuite(
             "long-flag-parsing",
             tags: ["argv", "parser", "flags"]
         ) {
-            Step("parse long flag into invocation") {
+            Test("parse long flag into invocation") {
                 let spec = try cmd("run") {
                     flag("stream")
                     flag("json")
@@ -2204,7 +2205,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("unknown long flag throws") {
+            Test("unknown long flag throws") {
                 let spec = try cmd("run") {
                     flag("stream")
                 }
@@ -2221,12 +2222,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var commandResolutionFlow: TestFlow {
-        TestFlow(
+    static var commandResolutionFlow: TestSuite {
+        TestSuite(
             "command-resolution",
             tags: ["argv", "parser", "commands"]
         ) {
-            Step("resolve child command and leave remaining argv") {
+            Test("resolve child command and leave remaining argv") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         about("Run one prompt.")
@@ -2276,7 +2277,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Step("resolve child command through alias") {
+            Test("resolve child command through alias") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         alias("r")
@@ -2320,12 +2321,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var argvCursorFlow: TestFlow {
-        TestFlow(
+    static var argvCursorFlow: TestSuite {
+        TestSuite(
             "argv-cursor",
             tags: ["argv", "parser"]
         ) {
-            Step("walk argv tokens") {
+            Test("walk argv tokens") {
                 var cursor = ArgvCursor(
                     [
                         "agentic",
@@ -2371,12 +2372,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var commandMetadataFlow: TestFlow {
-        TestFlow(
+    static var commandMetadataFlow: TestSuite {
+        TestSuite(
             "command-metadata",
             tags: ["spec", "dsl", "metadata"]
         ) {
-            Step("build command spec with metadata") {
+            Test("build command spec with metadata") {
                 let spec = try cmd("run") {
                     about("Run one prompt.")
                     discussion("Runs one prompt through the selected backend.")
@@ -2420,12 +2421,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var dynamicParameterDSLFlow: TestFlow {
-        TestFlow(
+    static var dynamicParameterDSLFlow: TestSuite {
+        TestSuite(
             "dynamic-parameter-dsl",
             tags: ["spec", "dsl", "params"]
         ) {
-            Step("build positional, option, and flag params") {
+            Test("build positional, option, and flag params") {
                 let spec = try cmd("run") {
                     arg(
                         "prompt",
@@ -2467,12 +2468,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var duplicateParamValidationFlow: TestFlow {
-        TestFlow(
+    static var duplicateParamValidationFlow: TestSuite {
+        TestSuite(
             "duplicate-param-validation",
             tags: ["spec", "validation"]
         ) {
-            Check("duplicate param names throw") {
+            Test("duplicate param names throw") {
                 try Expect.throwsError("duplicate-param") {
                     _ = try cmd("run") {
                         arg(
@@ -2490,12 +2491,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var duplicateShortValidationFlow: TestFlow {
-        TestFlow(
+    static var duplicateShortValidationFlow: TestSuite {
+        TestSuite(
             "duplicate-short-validation",
             tags: ["spec", "validation"]
         ) {
-            Check("duplicate short names throw") {
+            Test("duplicate short names throw") {
                 try Expect.throwsError("duplicate-short") {
                     _ = try cmd("run") {
                         opt(
@@ -2514,12 +2515,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var duplicateChildValidationFlow: TestFlow {
-        TestFlow(
+    static var duplicateChildValidationFlow: TestSuite {
+        TestSuite(
             "duplicate-child-validation",
             tags: ["spec", "validation", "children"]
         ) {
-            Check("duplicate child command names throw") {
+            Test("duplicate child command names throw") {
                 try Expect.throwsError("duplicate-child") {
                     _ = try CommandSpecNormalizer.normalize(
                         CommandSpec(
@@ -2539,12 +2540,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var primitiveValueParserFlow: TestFlow {
-        TestFlow(
+    static var primitiveValueParserFlow: TestSuite {
+        TestSuite(
             "primitive-value-parsers",
             tags: ["values", "parsers"]
         ) {
-            Check("string parser returns raw value") {
+            Test("string parser returns raw value") {
                 try Expect.equal(
                     try String.parser.parse("hello"),
                     "hello",
@@ -2552,7 +2553,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Check("int parser parses integers") {
+            Test("int parser parses integers") {
                 try Expect.equal(
                     try Int.parser.parse("42"),
                     42,
@@ -2560,13 +2561,13 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Check("int parser rejects invalid integers") {
+            Test("int parser rejects invalid integers") {
                 try Expect.throwsError("int.parser.invalid") {
                     _ = try Int.parser.parse("nope")
                 }
             }
 
-            Check("bool parser parses yes as true") {
+            Test("bool parser parses yes as true") {
                 try Expect.equal(
                     try Bool.parser.parse("yes"),
                     true,
@@ -2574,7 +2575,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Check("double parser parses decimals") {
+            Test("double parser parses decimals") {
                 try Expect.equal(
                     try Double.parser.parse("1.25"),
                     1.25,
@@ -2582,7 +2583,7 @@ private extension ArgumentFlowSuite {
                 )
             }
 
-            Check("raw representable parser parses string enum cases") {
+            Test("raw representable parser parses string enum cases") {
                 try Expect.equal(
                     try OutputMode.parser.parse("json"),
                     .json,
@@ -2592,12 +2593,12 @@ private extension ArgumentFlowSuite {
         }
     }
 
-    static var propertyWrapperFieldCollectionFlow: TestFlow {
-        TestFlow(
+    static var propertyWrapperFieldCollectionFlow: TestSuite {
+        TestSuite(
             "property-wrapper-field-collection",
             tags: ["typed", "wrappers", "params"]
         ) {
-            Step("collect params from property-wrapper fields") {
+            Test("collect params from property-wrapper fields") {
                 let fixture = WrapperFixture()
                 let params = try ArgumentFieldCollector.params(
                     of: fixture

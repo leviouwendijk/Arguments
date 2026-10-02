@@ -13,15 +13,13 @@ let package = Package(
             name: "Arguments",
             targets: ["Arguments"]
         ),
-
         .executable(
             name: "argtest",
             targets: ["ArgumentTestFlows"]
         ),
     ],
-
     dependencies: [
-        .package(url: "https://github.com/leviouwendijk/TestFlows.git", branch: "master"),
+        .package(url: "https://github.com/leviouwendijk/Testing.git", branch: "master"),
     ],
     targets: [
         .target(
@@ -31,7 +29,7 @@ let package = Package(
             name: "ArgumentTestFlows",
             dependencies: [
                 "Arguments",
-                .product(name: "TestFlows", package: "TestFlows"),
+                .product(name: "Testing", package: "Testing"),
             ]
         ),
         // .testTarget(
@@ -40,3 +38,30 @@ let package = Package(
         // ),
     ]
 )
+
+for target in package.targets {
+    switch target.type {
+    case .regular, .executable, .test, .macro:
+        var settings = target.swiftSettings ?? []
+
+        settings.append(
+            .treatAllWarnings(as: .error)
+        )
+
+        settings.append(
+            .unsafeFlags(
+                [
+                    "-continue-building-after-errors"
+                ]
+            )
+        )
+
+        target.swiftSettings = settings
+
+    case .plugin, .system, .binary:
+        break
+
+    @unknown default:
+        break
+    }
+}

@@ -1,10 +1,10 @@
 import Arguments
 import Foundation
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var argumentProgramFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var argumentProgramFlow: TestSuite {
+        TestSuite(
             "argument-program",
             tags: [
                 "application",
@@ -13,7 +13,7 @@ extension ArgumentFlowSuite {
                 "ergonomics",
             ]
         ) {
-            Step("program wrapper runs routed command") {
+            Test("program wrapper runs routed command") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         arg(
@@ -57,7 +57,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("program wrapper catches route errors") {
+            Test("program wrapper catches route errors") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("json")
@@ -86,7 +86,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("program wrapper can use custom error handler") {
+            Test("program wrapper can use custom error handler") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("json")
@@ -135,7 +135,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("typed program wrapper can use custom error handler") {
+            Test("typed program wrapper can use custom error handler") {
                 final class Box: @unchecked Sendable {
                     var message = ""
                 }
@@ -170,7 +170,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("program route builder accepts conditional routes") {
+            Test("program route builder accepts conditional routes") {
                 let spec = try cmd("agentic") {
                     try cmd("run") {
                         flag("json")

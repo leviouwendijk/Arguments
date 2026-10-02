@@ -1,13 +1,13 @@
 import Arguments
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var typedGroupFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var typedGroupFlow: TestSuite {
+        TestSuite(
             "typed-groups",
             tags: ["typed", "wrappers", "groups", "options"]
         ) {
-            Step("@Group lowers nested fields into one param group") {
+            Test("@Group lowers nested fields into one param group") {
                 let fixture = PeriodOptionsFixture()
 
                 let params = try ArgumentFieldCollector.params(
@@ -43,7 +43,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parser sees params inside typed group") {
+            Test("parser sees params inside typed group") {
                 let fixture = PeriodOptionsFixture()
 
                 let spec = try cmd("period") {
@@ -103,7 +103,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("@Group binds nested option fields") {
+            Test("@Group binds nested option fields") {
                 var fixture = PeriodOptionsFixture()
 
                 let spec = try cmd("period") {
@@ -159,7 +159,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("@Group preserves nested defaults when missing") {
+            Test("@Group preserves nested defaults when missing") {
                 var fixture = PeriodOptionsFixture()
 
                 let spec = try cmd("period") {
@@ -203,7 +203,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("@Opts supports repeating option occurrences") {
+            Test("@Opts supports repeating option occurrences") {
                 var fixture = RepeatingOptionsFixture()
 
                 let spec = try cmd("run") {
@@ -239,7 +239,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("duplicate names across typed group boundary throw") {
+            Test("duplicate names across typed group boundary throw") {
                 try Expect.throwsError("typed-groups.duplicate-boundary") {
                     let fixture = PeriodOptionsFixture()
 

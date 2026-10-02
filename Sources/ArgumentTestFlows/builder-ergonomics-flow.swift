@@ -1,9 +1,9 @@
 import Arguments
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var builderErgonomicsFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var builderErgonomicsFlow: TestSuite {
+        TestSuite(
             "builder-ergonomics",
             tags: [
                 "dsl",
@@ -12,7 +12,7 @@ extension ArgumentFlowSuite {
                 "ergonomics",
             ]
         ) {
-            Step("command builder accepts conditional command branches") {
+            Test("command builder accepts conditional command branches") {
                 let includeChat = true
 
                 let spec = try cmd("agentic") {
@@ -37,7 +37,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("command builder accepts arrays from extracted helpers") {
+            Test("command builder accepts arrays from extracted helpers") {
                 let extras: [CommandSpec] = [
                     try cmd("chat") {
                         flag("ephemeral")
@@ -66,7 +66,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("param builder accepts conditional params") {
+            Test("param builder accepts conditional params") {
                 let includeCustomRange = true
                 let includeQuarter = true
 

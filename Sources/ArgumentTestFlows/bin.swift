@@ -1,10 +1,19 @@
-import TestFlows
+import Darwin
+import Testing
 
 @main
-enum ArgumentFlowTestingMain {
+enum ArgumentTestingMain {
     static func main() async {
-        await TestFlowCLI.run(
-            suite: ArgumentFlowSuite.self
+        let result = await TestRunner.run(
+            ArgumentTestSuite.suite
+        )
+
+        print(
+            "passed=\(result.passedCount) skipped=\(result.skippedCount) failed=\(result.failureCount)"
+        )
+
+        exit(
+            result.isFailure ? 1 : 0
         )
     }
 }

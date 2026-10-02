@@ -1,10 +1,10 @@
 import Arguments
 import Foundation
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var argumentParsedFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var argumentParsedFlow: TestSuite {
+        TestSuite(
             "argument-parsed",
             tags: [
                 "typed",
@@ -14,7 +14,7 @@ extension ArgumentFlowSuite {
                 "dsl",
             ]
         ) {
-            Step("params can be collected from parsed type payload") {
+            Test("params can be collected from parsed type payload") {
                 let spec = try parsedFixtureSpec()
 
                 guard case .group(let group) = spec.params[0] else {
@@ -36,7 +36,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse returns strong type from loose payload") {
+            Test("parse returns strong type from loose payload") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
@@ -64,7 +64,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse rejects invalid semantic payload") {
+            Test("parse rejects invalid semantic payload") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
@@ -82,7 +82,7 @@ extension ArgumentFlowSuite {
                 }
             }
 
-            Step("context parse receives runtime context") {
+            Test("context parse receives runtime context") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--count",
@@ -112,7 +112,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("context parse rejects invalid context result") {
+            Test("context parse rejects invalid context result") {
                 let invocation = try ArgumentParser.parse(
                     [],
                     command: try contextParsedFixtureSpec()

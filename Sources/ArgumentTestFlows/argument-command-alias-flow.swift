@@ -1,9 +1,9 @@
 import Arguments
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var argumentCommandAliasFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var argumentCommandAliasFlow: TestSuite {
+        TestSuite(
             "argument-command-aliases",
             tags: [
                 "typed",
@@ -12,7 +12,7 @@ extension ArgumentFlowSuite {
                 "parser",
             ]
         ) {
-            Step("typed command aliases lower into command specs") {
+            Test("typed command aliases lower into command specs") {
                 let spec = try AliasRootCommandFixture.spec()
 
                 try Expect.equal(
@@ -33,7 +33,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("typed command aliases resolve to canonical command path") {
+            Test("typed command aliases resolve to canonical command path") {
                 let invocation = try Arguments.parse(
                     [
                         "a",
@@ -58,7 +58,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("command aliases render in help") {
+            Test("command aliases render in help") {
                 let help = ArgumentHelpRenderer().render(
                     command: try AliasRootCommandFixture.spec()
                 )
@@ -70,7 +70,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("duplicate command alias across siblings throws") {
+            Test("duplicate command alias across siblings throws") {
                 try Expect.throwsError(
                     "argument-command-alias.duplicate"
                 ) {

@@ -1,9 +1,9 @@
 import Arguments
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var typedBindingConvenienceFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var typedBindingConvenienceFlow: TestSuite {
+        TestSuite(
             "typed-binding-convenience",
             tags: [
                 "typed",
@@ -12,7 +12,7 @@ extension ArgumentFlowSuite {
                 "ergonomics",
             ]
         ) {
-            Step("params can be collected from a type") {
+            Test("params can be collected from a type") {
                 let spec = try cmd("vat-status") {
                     try params(
                         VATStatusOptionsFixture.self
@@ -45,7 +45,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parsed invocation binds directly into typed options") {
+            Test("parsed invocation binds directly into typed options") {
                 let spec = try cmd("vat-status") {
                     try params(
                         VATStatusOptionsFixture.self

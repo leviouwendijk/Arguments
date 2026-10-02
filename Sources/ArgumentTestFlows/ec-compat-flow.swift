@@ -1,14 +1,14 @@
 import Foundation
 import Arguments
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var paramAliasFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var paramAliasFlow: TestSuite {
+        TestSuite(
             "param-aliases",
             tags: ["argv", "parser", "aliases"]
         ) {
-            Step("long alias writes canonical flag") {
+            Test("long alias writes canonical flag") {
                 let spec = try cmd("run") {
                     flag(
                         "projection-diagnostics",
@@ -29,7 +29,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("long alias writes canonical option") {
+            Test("long alias writes canonical option") {
                 let spec = try cmd("run") {
                     opt(
                         "project",
@@ -56,7 +56,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("duplicate alias across params throws") {
+            Test("duplicate alias across params throws") {
                 try Expect.throwsError("param-alias.duplicate") {
                     _ = try cmd("run") {
                         flag("diag")
@@ -69,7 +69,7 @@ extension ArgumentFlowSuite {
                 }
             }
 
-            Step("help renders canonical and alias") {
+            Test("help renders canonical and alias") {
                 let spec = try cmd("run") {
                     flag(
                         "projection-diagnostics",
@@ -91,12 +91,12 @@ extension ArgumentFlowSuite {
         }
     }
 
-    static var manyOptionFlow: TestFlow {
-        TestFlow(
+    static var manyOptionFlow: TestSuite {
+        TestSuite(
             "many-options",
             tags: ["argv", "parser", "options"]
         ) {
-            Step("many option consumes until next option") {
+            Test("many option consumes until next option") {
                 let spec = try cmd("run") {
                     opt(
                         "presentation",
@@ -135,7 +135,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("many option supports repeated occurrences") {
+            Test("many option supports repeated occurrences") {
                 let spec = try cmd("run") {
                     opt(
                         "presentation",
@@ -167,7 +167,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("many option supports equals values") {
+            Test("many option supports equals values") {
                 let spec = try cmd("run") {
                     opt(
                         "presentation",
@@ -197,7 +197,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("many option respects terminator") {
+            Test("many option respects terminator") {
                 let spec = try cmd("run") {
                     opt(
                         "presentation",
@@ -238,12 +238,12 @@ extension ArgumentFlowSuite {
         }
     }
 
-    static var defaultValueFlow: TestFlow {
-        TestFlow(
+    static var defaultValueFlow: TestSuite {
+        TestSuite(
             "default-values",
             tags: ["argv", "parser", "defaults"]
         ) {
-            Step("missing option uses default") {
+            Test("missing option uses default") {
                 let spec = try cmd("run") {
                     opt(
                         "margins",
@@ -267,7 +267,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("provided option overrides default") {
+            Test("provided option overrides default") {
                 let spec = try cmd("run") {
                     opt(
                         "margins",
@@ -294,7 +294,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("missing positional uses default") {
+            Test("missing positional uses default") {
                 let spec = try cmd("run") {
                     arg(
                         "period",
@@ -320,12 +320,12 @@ extension ArgumentFlowSuite {
         }
     }
 
-    static var decimalValueFlow: TestFlow {
-        TestFlow(
+    static var decimalValueFlow: TestSuite {
+        TestSuite(
             "decimal-values",
             tags: ["argv", "parser", "values"]
         ) {
-            Step("decimal parser accepts POSIX decimal") {
+            Test("decimal parser accepts POSIX decimal") {
                 try Expect.equal(
                     try Decimal.parser.parse("0.01"),
                     Decimal(string: "0.01", locale: Locale(identifier: "en_US_POSIX"))!,
@@ -333,7 +333,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("decimal parser rejects invalid values") {
+            Test("decimal parser rejects invalid values") {
                 try Expect.throwsError("decimal-values.invalid") {
                     _ = try Decimal.parser.parse("nope")
                 }
@@ -341,12 +341,12 @@ extension ArgumentFlowSuite {
         }
     }
 
-    static var ecCompatibilityFlow: TestFlow {
-        TestFlow(
+    static var ecCompatibilityFlow: TestSuite {
+        TestSuite(
             "ec-compatibility",
             tags: ["argv", "parser", "ec"]
         ) {
-            Step("parse vat overview shape") {
+            Test("parse vat overview shape") {
                 let invocation = try Arguments.parse(
                     [
                         "ec",
@@ -394,7 +394,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse period presentation and diag alias") {
+            Test("parse period presentation and diag alias") {
                 let invocation = try Arguments.parse(
                     [
                         "ec",
@@ -425,7 +425,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("parse source render filters") {
+            Test("parse source render filters") {
                 let invocation = try Arguments.parse(
                     [
                         "ec",

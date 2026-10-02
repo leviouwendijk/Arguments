@@ -1,10 +1,10 @@
 import Arguments
 import Foundation
-import TestFlows
+import Testing
 
-extension ArgumentFlowSuite {
-    static var argumentLifecycleFlow: TestFlow {
-        TestFlow(
+extension ArgumentTestSuite {
+    static var argumentLifecycleFlow: TestSuite {
+        TestSuite(
             "argument-lifecycle",
             tags: [
                 "typed",
@@ -15,7 +15,7 @@ extension ArgumentFlowSuite {
                 "context",
             ]
         ) {
-            Step("options normalizes before returning") {
+            Test("options normalizes before returning") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
@@ -35,7 +35,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("options validates after normalization") {
+            Test("options validates after normalization") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
@@ -54,7 +54,7 @@ extension ArgumentFlowSuite {
                 }
             }
 
-            Step("resolved uses prepared options") {
+            Test("resolved uses prepared options") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
@@ -80,7 +80,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("context resolved receives context") {
+            Test("context resolved receives context") {
                 let invocation = try ArgumentParser.parse(
                     [],
                     command: try lifecycleSpec()
@@ -107,7 +107,7 @@ extension ArgumentFlowSuite {
                 )
             }
 
-            Step("compatibility bindResolved uses lifecycle") {
+            Test("compatibility bindResolved uses lifecycle") {
                 let invocation = try ArgumentParser.parse(
                     [
                         "--name",
