@@ -13,24 +13,12 @@ let package = Package(
             name: "Arguments",
             targets: ["Arguments"]
         ),
-        .executable(
-            name: "argtest",
-            targets: ["ArgumentTestFlows"]
-        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/leviouwendijk/Testing.git", branch: "master"),
     ],
     targets: [
         .target(
             name: "Arguments"
-        ),
-        .executableTarget(
-            name: "ArgumentTestFlows",
-            dependencies: [
-                "Arguments",
-                .product(name: "Testing", package: "Testing"),
-            ]
         ),
         // .testTarget(
         //     name: "ArgumentsTests",
