@@ -5,9 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "Arguments",
-    platforms: [
-        .macOS(.v13)
-    ],
     products: [
         .library(
             name: "Arguments",
@@ -20,10 +17,6 @@ let package = Package(
         .target(
             name: "Arguments"
         ),
-        // .testTarget(
-        //     name: "ArgumentsTests",
-        //     dependencies: ["Arguments"]
-        // ),
     ]
 )
 
